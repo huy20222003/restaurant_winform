@@ -29,10 +29,25 @@ namespace restaurant.DAO
             return DataProvider.Instance.ExecuteQuery(query);
         }
 
+        public DataTable GetProductsByTableId(int tableId)
+        {
+            string query = string.Format("SELECT * FROM BillDetail WHERE tableId = {0}", tableId);
+            return DataProvider.Instance.ExecuteQuery(query);
+        }
+
         public int GetProductSelledCount()
         {
             DataTable result = DataProvider.Instance.ExecuteQuery("SELECT SUM(Quantity) as productCount FROM BillDetail");
             return result.Rows.Count > 0 ? Convert.ToInt32(result.Rows[0]["productCount"]) : 0;
         }
+
+        public DataTable GetTop5Products()
+        {
+            string query = @"SELECT TOP 5 productId, COUNT(*) * 100.0 / (SELECT COUNT(*) FROM BillDetail) AS Percentage FROM BillDetail GROUP BY productId ORDER BY Percentage DESC";
+
+            return DataProvider.Instance.ExecuteQuery(query);
+        }
+
+
     }
 }

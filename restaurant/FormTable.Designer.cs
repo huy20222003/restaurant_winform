@@ -96,7 +96,8 @@
             this.comboBoxTableStatus.ItemHeight = 43;
             this.comboBoxTableStatus.Items.AddRange(new object[] {
             "Active",
-            "Inactive"});
+            "Inactive",
+            "Used"});
             this.comboBoxTableStatus.Location = new System.Drawing.Point(33, 447);
             this.comboBoxTableStatus.MaxDropDownItems = 4;
             this.comboBoxTableStatus.MouseState = MaterialSkin.MouseState.OUT;

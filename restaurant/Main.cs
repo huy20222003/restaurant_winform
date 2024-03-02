@@ -23,6 +23,7 @@ using System.Reflection;
 using CloudinaryDotNet.Actions;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Diagnostics;
+using Guna.UI2.WinForms;
 
 namespace restaurant
 {
@@ -31,6 +32,7 @@ namespace restaurant
         private string employee_username;
         private Employee currrent_employee;
         private FlowLayoutPanel flowLayoutPanel;
+        private PictureBox moreOptionsPictureBox;
         public Main()
         {
             InitializeComponent();
@@ -58,7 +60,16 @@ namespace restaurant
             this.currrent_employee = employee;
 
             Load_Data();
-            //--------------------------------------------------------------------------------------------------------
+
+        
+        //--------------------------------------------------------------------------------------------------------
+        }
+
+        //---------------------------PHẦN BIỂU ĐỒ CHO TAB DASHBOARD-----------------------------------------------
+
+        //--------------------------LINE CHART--------------------------------------------------------------------
+        private void lineChart ()
+        {
             int currentMonth = DateTime.Now.Month; // Lấy tháng hiện tại
             int currentYear = DateTime.Now.Year;   // Lấy năm hiện tại
             DataTable billCountByDay = BillDAO.Instance.GetBillCountByDate(currentMonth, currentYear);
@@ -75,7 +86,7 @@ namespace restaurant
             cartesianChart1.AxisX.Add(new Axis
             {
                 Title = "Ngày",
-                Labels = dayValues 
+                Labels = dayValues
             });
 
             BillSeries = new LineSeries
@@ -99,18 +110,66 @@ namespace restaurant
                 : Visibility.Visible;
         }
 
-        //-------------------------------------------------------------------------------------------------------
+        //-----------------------------PIE CHART-----------------------------------------------------------------
+        private void pieChart()
+        {
+            Func<ChartPoint, string> labelPoint = chartPoint =>
+                string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
+
+            // Lấy dữ liệu từ cơ sở dữ liệu
+            DataTable data = BillDetailDAO.Instance.GetTop5Products();
+
+            // Tạo các series cho biểu đồ và thêm dữ liệu từ DataTable
+            SeriesCollection seriesCollection = new SeriesCollection();
+            foreach (DataRow row in data.Rows)
+            {
+                string productId = row["productId"].ToString();
+                Product product = ProductDAO.Instance.GetProductById(int.Parse(productId));
+                string percentageString = row["Percentage"].ToString();
+                double percentage = double.Parse(percentageString.Substring(0, Math.Min(percentageString.Length, 4))); 
+
+
+                PieSeries series = new PieSeries
+                {
+                    Title = product.Name,
+                    Values = new ChartValues<double> { percentage },
+                    DataLabels = true,
+                    LabelPoint = labelPoint
+                };
+
+                seriesCollection.Add(series);
+            }
+
+            // Cập nhật biểu đồ với các series mới
+            pieChart1.Series = seriesCollection;
+
+            pieChart1.LegendLocation = LegendLocation.Bottom;
+        }
+
+    //-------------------------------------------------------------------------------------------------------
 
         private void Load_Data()
         {
+
             DTO.Role role = RoleDAO.Instance.GetRoleById(currrent_employee.RoleID);
             string roleName = role.Name;
+            // Ẩn tabEmployee nếu vai trò là "admin"
+            if (roleName == "admin")
+            {
+                tabEmployee.Show();
+            }
+            else
+            {
+                tabEmployee.Hide();
+            }
 
             //gọi hàm
             getEmployeeCount();
             getProductSelledCount();
             getRevenue();
             getBillCount();
+            lineChart();
+            pieChart();
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -136,6 +195,10 @@ namespace restaurant
             txtAccountPhoneNumber.Text = this.currrent_employee.PhoneNumber;
             comboBoxAccountGender.SelectedItem = this.currrent_employee.Gender;
             comboBoxAccountAge.SelectedItem = this.currrent_employee.Age;
+            this.reportViewer1.RefreshReport();
+            timer.Interval = 1000; // Cập nhật mỗi giây
+            timer.Tick += Timer_Tick;
+            timer.Start();
         }
 
         private void InitializeFlowLayoutPanel()
@@ -277,6 +340,10 @@ namespace restaurant
         private void showProductItem()
         {
             ClearCardItem();
+
+            // Hiển thị hiệu ứng loader
+            progressIndicatorProduct.Visible = true;
+
             DataTable productList = ProductDAO.Instance.GetListProduct();
 
             // Lặp qua từng bản ghi trong DataTable
@@ -306,7 +373,7 @@ namespace restaurant
                 labelPriceValue.Location = new System.Drawing.Point(10, 240); // Đặt vị trí của Label trong TableLayoutPane
 
 
-                MaterialButton buttonViewDetailProduct = new MaterialButton() {  Text = "Xem chi tiết", AutoSize = true, Cursor = Cursors.Hand};
+                MaterialButton buttonViewDetailProduct = new MaterialButton() { Text = "Xem chi tiết", AutoSize = true, Cursor = Cursors.Hand };
                 buttonViewDetailProduct.Location = new System.Drawing.Point(80, 280);
 
                 buttonViewDetailProduct.Click += buttonViewDetailProduct_Click;
@@ -321,9 +388,13 @@ namespace restaurant
                 flowLayoutPanel.Controls.Add(cardProductItem);
             }
 
+            // Ẩn hiệu ứng loader khi đã thêm xong các card sản phẩm
+            progressIndicatorProduct.Visible = false;
+
             // Thêm FlowLayoutPanel vào TabPage hoặc Panel tương ứng
             tabProduct.Controls.Add(flowLayoutPanel);
         }
+
 
         private void buttonViewDetailProduct_Click(object sender, EventArgs e)
         {
@@ -787,24 +858,171 @@ namespace restaurant
                 // Tạo các phần tử thông tin sản phẩm và đặt vị trí cho chúng
                 MaterialLabel labelNameValue = new MaterialLabel() { Text = row["Name"].ToString(), AutoSize = true, FontType = MaterialSkinManager.fontType.Body1 };
                 labelNameValue.Location = new System.Drawing.Point(20, 80); // Đặt vị trí của Label trong TableLayoutPanel
+                                                                            // Tạo biểu tượng dấu ba chấm
+                moreOptionsPictureBox = new PictureBox();
+                moreOptionsPictureBox.Image = Properties.Resources.more_option_icon; // Thay đổi hình ảnh theo nhu cầu
+                moreOptionsPictureBox.Size = new System.Drawing.Size(25, 25);
+                moreOptionsPictureBox.Location = new System.Drawing.Point(panelTable.Width - moreOptionsPictureBox.Width - 10, 10); // Đặt vị trí ở góc phải trên của panelTable
+                moreOptionsPictureBox.Visible = true; // Ẩn biểu tượng ban đầu
+                moreOptionsPictureBox.BringToFront();
 
+                // Gắn sự kiện MouseHover vào panelTable để hiển thị biểu tượng dấu ba chấm
+                pictureBox.MouseEnter += PictureBox_MouseEnter;
+                panelTable.MouseHover += PictureBox_MouseEnter;
+                pictureBox.MouseLeave += PictureBox_MouseLeave;
+                panelTable.MouseLeave += PictureBox_MouseLeave;
+
+                pictureBox.Tag = row;
+                pictureBox.Click += showProductSelected;
+
+                // Gắn sự kiện Click vào biểu tượng dấu ba chấm
+                moreOptionsPictureBox.Click += MoreOptionsPictureBox_Click;
+
+                // Thêm các controls vào panelTable
                 panelTable.Controls.Add(pictureBox);
                 panelTable.Controls.Add(labelNameValue);
+                panelTable.Controls.Add(moreOptionsPictureBox);
 
-                panelTable.Click += panelTable_Click;
-
-                // Thêm thẻ sản phẩm vào FlowLayoutPanel
+                // Thêm panelTable vào FlowLayoutPanel
                 flowLayoutPanel.Controls.Add(panelTable);
             }
             cardBillTable.Controls.Add(flowLayoutPanel);
         }
 
-        private void panelTable_Click(object sender, EventArgs e)
+        // Sự kiện MouseHover của panelTable
+        private void PictureBox_MouseEnter(object sender, EventArgs e)
+        {
+            // Hiển thị biểu tượng dấu ba chấm khi di chuột qua panelTable
+            Panel panelTable = sender as Panel;
+            moreOptionsPictureBox.Visible = true;
+        }
+
+        // Sự kiện MouseLeave của panelTable
+        private void PictureBox_MouseLeave(object sender, EventArgs e)
+        {
+            // Ẩn biểu tượng dấu ba chấm khi chuột rời khỏi panelTable
+            moreOptionsPictureBox.Visible = false;
+        }
+
+        // Sự kiện Click của biểu tượng dấu ba chấm
+        private void MoreOptionsPictureBox_Click(object sender, EventArgs e)
+        {
+            PictureBox moreOptionsPictureBox = sender as PictureBox;
+            // Mở menu tùy chọn khi nhấp vào biểu tượng dấu ba chấm
+            ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
+            ToolStripMenuItem buttonBillAddProduct = new ToolStripMenuItem("Thêm sản phẩm");
+            buttonBillAddProduct.Height = 100;
+            buttonBillAddProduct.Click += buttonBillAddProduct_Click; // Gán sự kiện cho mục 1
+            contextMenuStrip.Items.Add(buttonBillAddProduct);
+
+            // Hiển thị menu tại vị trí của biểu tượng dấu ba chấm
+            moreOptionsPictureBox.ContextMenuStrip = contextMenuStrip;
+            contextMenuStrip.Cursor = Cursors.Hand;
+            contextMenuStrip.Show(moreOptionsPictureBox, new System.Drawing.Point(0, moreOptionsPictureBox.Height), ToolStripDropDownDirection.BelowLeft);
+        }
+
+        private void buttonBillAddProduct_Click(object sender, EventArgs e)
         {
             FormAddProductToBill formAddProductToBill = new FormAddProductToBill();
             formAddProductToBill.TopMost = true;
             formAddProductToBill.Show();
         }
+
+        private void showProductSelected(object sender, EventArgs e)
+        {
+            ClearCardItem();
+            DataRow tableInfo = (sender as PictureBox).Tag as DataRow;
+            if(tableInfo != null)
+            {
+                if (tableInfo["Status"].ToString() == "Active")
+                {
+                    int defaultId = 1;
+                    int id;
+                    if (int.TryParse(tableInfo["ID"].ToString(), out id))
+                    {
+                        DataTable productList = BillDetailDAO.Instance.GetProductsByTableId(id != null ? defaultId : id);
+
+                        if(productList != null)
+                        {
+                            foreach (DataRow row in productList.Rows)
+                            {
+                                Product product = ProductDAO.Instance.GetProductById(int.Parse(row["ProductId"].ToString()));
+                                // Tạo một MaterialCard mới cho mỗi sản phẩm
+                                Panel panelTable = new Panel();
+                                panelTable.Width = cardBillProducts.Width; // Đặt độ rộng của thẻ sản phẩm
+                                panelTable.Height = 80;
+                                panelTable.Margin = new Padding(10, 10, 30, 10);
+                                panelTable.Cursor = Cursors.Hand;
+
+                                // Tạo PictureBox để hiển thị hình ảnh sản phẩm
+                                PictureBox pictureBox = new PictureBox();
+                                pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                                pictureBox.Location = new System.Drawing.Point(0, 0); // Đặt vị trí của PictureBox trong panel
+                                pictureBox.Width = 80;
+                                pictureBox.Height = panelTable.Height;
+                                pictureBox.ImageLocation = product.ImageUrl;
+                                pictureBox.InitialImage = Properties.Resources.logo_ver_2;
+
+                                // Tạo các phần tử thông tin sản phẩm và đặt vị trí cho chúng
+                                MaterialLabel labelNameValue = new MaterialLabel() { Text = product.Name.ToString(), AutoSize = true, FontType = MaterialSkinManager.fontType.Subtitle1 };
+                                labelNameValue.Location = new System.Drawing.Point(92, 14); // Đặt vị trí của Label trong TableLayoutPanel
+                                labelNameValue.Margin = new Padding(5, 0, 5, 0);
+
+                                MaterialLabel labelSizeValue = new MaterialLabel() { Text = "size: " + row["Size"].ToString(), AutoSize = true, FontType = MaterialSkinManager.fontType.Caption };
+                                labelSizeValue.Location = new System.Drawing.Point(92, 48); // Đặt vị trí của Label trong TableLayoutPanel
+                                labelNameValue.Margin = new Padding(5, 0, 5, 0);
+
+                                MaterialLabel labeColorValue = new MaterialLabel() { Text = "color: " + row["Color"].ToString(), AutoSize = true, FontType = MaterialSkinManager.fontType.Caption };
+                                labeColorValue.Location = new System.Drawing.Point(150, 48); // Đặt vị trí của Label trong TableLayoutPanel
+                                labeColorValue.Margin = new Padding(5, 0, 5, 0);
+
+                                MaterialLabel labelQuantityValue = new MaterialLabel() { Text = "x" + row["Quantity"].ToString(), AutoSize = true, FontType = MaterialSkinManager.fontType.Body1 };
+                                labelQuantityValue.Location = new System.Drawing.Point(324, 32); // Đặt vị trí của Label trong TableLayoutPanel
+                                labelQuantityValue.Margin = new Padding(5, 0, 5, 0);
+
+                                MaterialLabel labelPriceValue = new MaterialLabel() { Text = product.Price + "đ", AutoSize = true, FontType = MaterialSkinManager.fontType.Body1 };
+                                labelPriceValue.Location = new System.Drawing.Point(360, 32); // Đặt vị trí của Label trong TableLayoutPanel
+                                labelPriceValue.Margin = new Padding(5, 0, 5, 0);
+
+                                // Thêm các controls vào panelTable
+                                panelTable.Controls.Add(pictureBox);
+                                panelTable.Controls.Add(labelNameValue);
+                                panelTable.Controls.Add(labelSizeValue);
+                                panelTable.Controls.Add(labeColorValue);
+                                panelTable.Controls.Add(labelQuantityValue);
+                                panelTable.Controls.Add(labelPriceValue);
+
+                                // Thêm panelTable vào FlowLayoutPanel
+                                flowLayoutPanel.Controls.Add(panelTable);
+                            }
+                            cardBillProducts.Controls.Add(flowLayoutPanel);
+                        }
+                        else
+                        {
+                            MaterialLabel labelEmptyProduct = new MaterialLabel() { Text = "Chưa gọi món ăn", AutoSize = true, FontType = MaterialSkinManager.fontType.Body1 };
+                            labelEmptyProduct.Location = new System.Drawing.Point(10, 250); // Đặt vị trí của Label trong TableLayoutPanel
+                            labelEmptyProduct.Margin = new Padding(5, 0, 5, 0);
+                            flowLayoutPanel.Controls.Add(labelEmptyProduct);
+                            cardBillProducts.Controls.Add(flowLayoutPanel);
+                        }
+                    }
+                    else
+                    {
+                        CustomMessageBox.Show("ID bàn không tồn tại!");
+                    }
+                }
+                else
+                {
+                    // Hiển thị thông báo cho người dùng rằng bàn không có sẵn
+                    CustomMessageBox.Show("Bàn này không phải là bàn đang hoạt động!");
+                }
+            }
+            else
+            {
+                CustomMessageBox.Show("Không tìm thấy dữ liệu bàn này!");
+            }
+        }
+
 
         //----------------------------------------------------------------------------------------------------------------------
 
@@ -869,6 +1087,17 @@ namespace restaurant
                     controlToRemove.Dispose(); // Giải phóng tài nguyên 
                 }
             }
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            // Lấy thời gian hiện tại
+            DateTime now = DateTime.Now;
+
+            // Hiển thị ngày tháng thứ giờ phút giây hiện tại trên label
+            labelTimeNow.Text = string.Format("Thời gian hiện tại: {0:00}/{1:00}/{2:00} {3:00}:{4:00}:{5:00}",
+                                                now.Day, now.Month, now.Year, 
+                                                now.Hour, now.Minute, now.Second);
         }
     }
 }

@@ -34,8 +34,9 @@ namespace restaurant
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.tabControl = new MaterialSkin.Controls.MaterialTabControl();
             this.tabDashboard = new System.Windows.Forms.TabPage();
+            this.labelTimeNow = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.materialCard13 = new MaterialSkin.Controls.MaterialCard();
-            this.buttonLogout = new System.Windows.Forms.PictureBox();
+            this.buttonLogout = new Guna.UI2.WinForms.Guna2CircleButton();
             this.labelEmployeeUsername = new System.Windows.Forms.Label();
             this.employeeAvatar = new System.Windows.Forms.PictureBox();
             this.materialCard4 = new MaterialSkin.Controls.MaterialCard();
@@ -70,7 +71,7 @@ namespace restaurant
             this.buttonOpenFormAddCategory = new MaterialSkin.Controls.MaterialButton();
             this.materialCard7 = new MaterialSkin.Controls.MaterialCard();
             this.categoryListView = new MaterialSkin.Controls.MaterialListView();
-            this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.image = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.description = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -78,6 +79,7 @@ namespace restaurant
             this.updatedAt = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.action = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabProduct = new System.Windows.Forms.TabPage();
+            this.progressIndicatorProduct = new Guna.UI2.WinForms.Guna2ProgressIndicator();
             this.buttonAddProduct = new MaterialSkin.Controls.MaterialButton();
             this.materialCard14 = new MaterialSkin.Controls.MaterialCard();
             this.materialFloatingActionButton6 = new MaterialSkin.Controls.MaterialFloatingActionButton();
@@ -103,14 +105,17 @@ namespace restaurant
             this.tableAction = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label7 = new System.Windows.Forms.Label();
             this.tabBill = new System.Windows.Forms.TabPage();
+            this.buttonBillPrintBill = new MaterialSkin.Controls.MaterialButton();
+            this.buttonBillPayment = new MaterialSkin.Controls.MaterialButton();
             this.cardBillTable = new MaterialSkin.Controls.MaterialCard();
-            this.cardBillProduct = new MaterialSkin.Controls.MaterialCard();
+            this.cardBillProducts = new MaterialSkin.Controls.MaterialCard();
             this.label20 = new System.Windows.Forms.Label();
             this.materialCard16 = new MaterialSkin.Controls.MaterialCard();
             this.materialFloatingActionButton8 = new MaterialSkin.Controls.MaterialFloatingActionButton();
             this.label12 = new System.Windows.Forms.Label();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.tabAnalytics = new System.Windows.Forms.TabPage();
+            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             this.tabEmployee = new System.Windows.Forms.TabPage();
             this.buttonEmployeeAdd = new MaterialSkin.Controls.MaterialButton();
             this.label19 = new System.Windows.Forms.Label();
@@ -176,10 +181,10 @@ namespace restaurant
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.imageListCategory = new System.Windows.Forms.ImageList(this.components);
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.tabControl.SuspendLayout();
             this.tabDashboard.SuspendLayout();
             this.materialCard13.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.buttonLogout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.employeeAvatar)).BeginInit();
             this.materialCard4.SuspendLayout();
             this.materialCard3.SuspendLayout();
@@ -203,6 +208,7 @@ namespace restaurant
             this.tabBill.SuspendLayout();
             this.materialCard16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            this.tabAnalytics.SuspendLayout();
             this.tabEmployee.SuspendLayout();
             this.materialCard21.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
@@ -247,6 +253,7 @@ namespace restaurant
             // tabDashboard
             // 
             this.tabDashboard.AutoScroll = true;
+            this.tabDashboard.Controls.Add(this.labelTimeNow);
             this.tabDashboard.Controls.Add(this.materialCard13);
             this.tabDashboard.Controls.Add(this.materialCard4);
             this.tabDashboard.Controls.Add(this.materialCard3);
@@ -262,6 +269,16 @@ namespace restaurant
             this.tabDashboard.TabIndex = 0;
             this.tabDashboard.Text = "Trang chủ";
             this.tabDashboard.UseVisualStyleBackColor = true;
+            // 
+            // labelTimeNow
+            // 
+            this.labelTimeNow.BackColor = System.Drawing.Color.Transparent;
+            this.labelTimeNow.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTimeNow.Location = new System.Drawing.Point(20, 764);
+            this.labelTimeNow.Name = "labelTimeNow";
+            this.labelTimeNow.Size = new System.Drawing.Size(25, 30);
+            this.labelTimeNow.TabIndex = 7;
+            this.labelTimeNow.Text = "11";
             // 
             // materialCard13
             // 
@@ -281,14 +298,20 @@ namespace restaurant
             // 
             // buttonLogout
             // 
+            this.buttonLogout.Animated = true;
             this.buttonLogout.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonLogout.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.buttonLogout.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.buttonLogout.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.buttonLogout.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.buttonLogout.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.buttonLogout.ForeColor = System.Drawing.Color.White;
             this.buttonLogout.Image = ((System.Drawing.Image)(resources.GetObject("buttonLogout.Image")));
-            this.buttonLogout.Location = new System.Drawing.Point(1287, 14);
+            this.buttonLogout.Location = new System.Drawing.Point(1273, 14);
             this.buttonLogout.Name = "buttonLogout";
-            this.buttonLogout.Size = new System.Drawing.Size(46, 46);
-            this.buttonLogout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.buttonLogout.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.buttonLogout.Size = new System.Drawing.Size(50, 45);
             this.buttonLogout.TabIndex = 2;
-            this.buttonLogout.TabStop = false;
             this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
             // labelEmployeeUsername
@@ -774,49 +797,43 @@ namespace restaurant
             // 
             // categoryListView
             // 
-            this.categoryListView.Activation = System.Windows.Forms.ItemActivation.TwoClick;
-            this.categoryListView.AutoSizeTable = true;
+            this.categoryListView.AutoSizeTable = false;
             this.categoryListView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.categoryListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.categoryListView.CheckBoxes = true;
             this.categoryListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ID,
+            this.id,
             this.image,
             this.name,
             this.description,
             this.createdAt,
             this.updatedAt,
             this.action});
+            this.categoryListView.Cursor = System.Windows.Forms.Cursors.Hand;
             this.categoryListView.Depth = 0;
-            this.categoryListView.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.categoryListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.categoryListView.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.categoryListView.FullRowSelect = true;
             this.categoryListView.HideSelection = false;
-            this.categoryListView.HoverSelection = true;
-            this.categoryListView.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.categoryListView.Location = new System.Drawing.Point(14, 14);
             this.categoryListView.MinimumSize = new System.Drawing.Size(200, 100);
             this.categoryListView.MouseLocation = new System.Drawing.Point(-1, -1);
             this.categoryListView.MouseState = MaterialSkin.MouseState.OUT;
             this.categoryListView.Name = "categoryListView";
             this.categoryListView.OwnerDraw = true;
-            this.categoryListView.Scrollable = false;
-            this.categoryListView.ShowItemToolTips = true;
-            this.categoryListView.Size = new System.Drawing.Size(1290, 100);
-            this.categoryListView.SmallImageList = this.imageListTab;
+            this.categoryListView.Size = new System.Drawing.Size(1288, 472);
             this.categoryListView.TabIndex = 0;
             this.categoryListView.UseCompatibleStateImageBehavior = false;
             this.categoryListView.View = System.Windows.Forms.View.Details;
-            this.categoryListView.SelectedIndexChanged += new System.EventHandler(this.Main_Load);
-            this.categoryListView.Click += new System.EventHandler(this.categoryListView_SelectedIndexChanged);
+            this.categoryListView.SelectedIndexChanged += new System.EventHandler(this.categoryListView_SelectedIndexChanged);
             // 
-            // ID
+            // id
             // 
-            this.ID.Text = "ID";
-            this.ID.Width = 50;
+            this.id.Text = "ID";
+            this.id.Width = 50;
             // 
             // image
             // 
-            this.image.Text = "Hình ảnh";
+            this.image.Text = "URL Hình ảnh";
             this.image.Width = 150;
             // 
             // name
@@ -826,7 +843,7 @@ namespace restaurant
             // 
             // description
             // 
-            this.description.Text = "Mô tả";
+            this.description.Text = "Mô tả danh mục";
             this.description.Width = 300;
             // 
             // createdAt
@@ -847,6 +864,7 @@ namespace restaurant
             // tabProduct
             // 
             this.tabProduct.AutoScroll = true;
+            this.tabProduct.Controls.Add(this.progressIndicatorProduct);
             this.tabProduct.Controls.Add(this.buttonAddProduct);
             this.tabProduct.Controls.Add(this.materialCard14);
             this.tabProduct.Controls.Add(this.label5);
@@ -857,6 +875,14 @@ namespace restaurant
             this.tabProduct.TabIndex = 2;
             this.tabProduct.Text = "Sản phẩm";
             this.tabProduct.UseVisualStyleBackColor = true;
+            // 
+            // progressIndicatorProduct
+            // 
+            this.progressIndicatorProduct.AutoStart = true;
+            this.progressIndicatorProduct.Location = new System.Drawing.Point(578, 325);
+            this.progressIndicatorProduct.Name = "progressIndicatorProduct";
+            this.progressIndicatorProduct.Size = new System.Drawing.Size(90, 90);
+            this.progressIndicatorProduct.TabIndex = 9;
             // 
             // buttonAddProduct
             // 
@@ -1187,8 +1213,10 @@ namespace restaurant
             // 
             // tabBill
             // 
+            this.tabBill.Controls.Add(this.buttonBillPrintBill);
+            this.tabBill.Controls.Add(this.buttonBillPayment);
             this.tabBill.Controls.Add(this.cardBillTable);
-            this.tabBill.Controls.Add(this.cardBillProduct);
+            this.tabBill.Controls.Add(this.cardBillProducts);
             this.tabBill.Controls.Add(this.label20);
             this.tabBill.Controls.Add(this.materialCard16);
             this.tabBill.ImageKey = "icons8-bill-50.png";
@@ -1198,6 +1226,44 @@ namespace restaurant
             this.tabBill.TabIndex = 4;
             this.tabBill.Text = "Hoá đơn";
             this.tabBill.UseVisualStyleBackColor = true;
+            // 
+            // buttonBillPrintBill
+            // 
+            this.buttonBillPrintBill.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonBillPrintBill.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.buttonBillPrintBill.Depth = 0;
+            this.buttonBillPrintBill.HighEmphasis = true;
+            this.buttonBillPrintBill.Icon = null;
+            this.buttonBillPrintBill.Location = new System.Drawing.Point(1059, 755);
+            this.buttonBillPrintBill.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.buttonBillPrintBill.MouseState = MaterialSkin.MouseState.HOVER;
+            this.buttonBillPrintBill.Name = "buttonBillPrintBill";
+            this.buttonBillPrintBill.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.buttonBillPrintBill.Size = new System.Drawing.Size(127, 36);
+            this.buttonBillPrintBill.TabIndex = 13;
+            this.buttonBillPrintBill.Text = "Xuất hoá đơn";
+            this.buttonBillPrintBill.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.buttonBillPrintBill.UseAccentColor = false;
+            this.buttonBillPrintBill.UseVisualStyleBackColor = true;
+            // 
+            // buttonBillPayment
+            // 
+            this.buttonBillPayment.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonBillPayment.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.buttonBillPayment.Depth = 0;
+            this.buttonBillPayment.HighEmphasis = true;
+            this.buttonBillPayment.Icon = null;
+            this.buttonBillPayment.Location = new System.Drawing.Point(1225, 755);
+            this.buttonBillPayment.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.buttonBillPayment.MouseState = MaterialSkin.MouseState.HOVER;
+            this.buttonBillPayment.Name = "buttonBillPayment";
+            this.buttonBillPayment.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.buttonBillPayment.Size = new System.Drawing.Size(114, 36);
+            this.buttonBillPayment.TabIndex = 12;
+            this.buttonBillPayment.Text = "Thanh toán";
+            this.buttonBillPayment.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.buttonBillPayment.UseAccentColor = false;
+            this.buttonBillPayment.UseVisualStyleBackColor = true;
             // 
             // cardBillTable
             // 
@@ -1212,18 +1278,20 @@ namespace restaurant
             this.cardBillTable.Size = new System.Drawing.Size(835, 596);
             this.cardBillTable.TabIndex = 11;
             // 
-            // cardBillProduct
+            // cardBillProducts
             // 
-            this.cardBillProduct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.cardBillProduct.Depth = 0;
-            this.cardBillProduct.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cardBillProduct.Location = new System.Drawing.Point(936, 149);
-            this.cardBillProduct.Margin = new System.Windows.Forms.Padding(14);
-            this.cardBillProduct.MouseState = MaterialSkin.MouseState.HOVER;
-            this.cardBillProduct.Name = "cardBillProduct";
-            this.cardBillProduct.Padding = new System.Windows.Forms.Padding(14);
-            this.cardBillProduct.Size = new System.Drawing.Size(403, 596);
-            this.cardBillProduct.TabIndex = 10;
+            this.cardBillProducts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cardBillProducts.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("cardBillProducts.BackgroundImage")));
+            this.cardBillProducts.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.cardBillProducts.Depth = 0;
+            this.cardBillProducts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.cardBillProducts.Location = new System.Drawing.Point(883, 149);
+            this.cardBillProducts.Margin = new System.Windows.Forms.Padding(14);
+            this.cardBillProducts.MouseState = MaterialSkin.MouseState.HOVER;
+            this.cardBillProducts.Name = "cardBillProducts";
+            this.cardBillProducts.Padding = new System.Windows.Forms.Padding(14);
+            this.cardBillProducts.Size = new System.Drawing.Size(456, 596);
+            this.cardBillProducts.TabIndex = 10;
             // 
             // label20
             // 
@@ -1294,6 +1362,7 @@ namespace restaurant
             // 
             // tabAnalytics
             // 
+            this.tabAnalytics.Controls.Add(this.reportViewer1);
             this.tabAnalytics.ImageKey = "icons8-analytics-50.png";
             this.tabAnalytics.Location = new System.Drawing.Point(4, 32);
             this.tabAnalytics.Name = "tabAnalytics";
@@ -1301,6 +1370,14 @@ namespace restaurant
             this.tabAnalytics.TabIndex = 5;
             this.tabAnalytics.Text = "Thống kê";
             this.tabAnalytics.UseVisualStyleBackColor = true;
+            // 
+            // reportViewer1
+            // 
+            this.reportViewer1.Location = new System.Drawing.Point(14, 170);
+            this.reportViewer1.Name = "reportViewer1";
+            this.reportViewer1.ServerReport.BearerToken = null;
+            this.reportViewer1.Size = new System.Drawing.Size(1375, 603);
+            this.reportViewer1.TabIndex = 0;
             // 
             // tabEmployee
             // 
@@ -2255,7 +2332,7 @@ namespace restaurant
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1416, 900);
             this.Controls.Add(this.tabControl);
             this.DrawerIndicatorWidth = 2;
@@ -2267,13 +2344,12 @@ namespace restaurant
             this.Name = "Main";
             this.Padding = new System.Windows.Forms.Padding(0, 64, 3, 3);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Main";
             this.Load += new System.EventHandler(this.Main_Load);
             this.tabControl.ResumeLayout(false);
             this.tabDashboard.ResumeLayout(false);
+            this.tabDashboard.PerformLayout();
             this.materialCard13.ResumeLayout(false);
             this.materialCard13.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.buttonLogout)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.employeeAvatar)).EndInit();
             this.materialCard4.ResumeLayout(false);
             this.materialCard4.PerformLayout();
@@ -2309,6 +2385,7 @@ namespace restaurant
             this.materialCard16.ResumeLayout(false);
             this.materialCard16.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            this.tabAnalytics.ResumeLayout(false);
             this.tabEmployee.ResumeLayout(false);
             this.tabEmployee.PerformLayout();
             this.materialCard21.ResumeLayout(false);
@@ -2394,17 +2471,8 @@ namespace restaurant
         private MaterialSkin.Controls.MaterialButton buttonOpenFormAddTable;
         private System.Windows.Forms.TabPage tabCategory;
         private MaterialSkin.Controls.MaterialMaskedTextBox txtCategorySearch;
-        private System.Windows.Forms.Label label6;
         private MaterialSkin.Controls.MaterialButton buttonOpenFormAddCategory;
         private MaterialSkin.Controls.MaterialCard materialCard7;
-        private MaterialSkin.Controls.MaterialListView categoryListView;
-        private System.Windows.Forms.ColumnHeader ID;
-        private System.Windows.Forms.ColumnHeader image;
-        private System.Windows.Forms.ColumnHeader name;
-        private System.Windows.Forms.ColumnHeader description;
-        private System.Windows.Forms.ColumnHeader createdAt;
-        private System.Windows.Forms.ColumnHeader updatedAt;
-        private System.Windows.Forms.ColumnHeader action;
         private System.Windows.Forms.PictureBox buttonCategorySearch;
         private MaterialSkin.Controls.MaterialCard materialCard10;
         private System.Windows.Forms.Label label8;
@@ -2452,7 +2520,6 @@ namespace restaurant
         private MaterialSkin.Controls.MaterialTextBox txtSettingNewPassword;
         private MaterialSkin.Controls.MaterialTextBox txtSettingOldPassword;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.PictureBox buttonLogout;
         private System.Windows.Forms.TabPage tabRole;
         private MaterialSkin.Controls.MaterialButton buttonOpenFormAddRole;
         private System.Windows.Forms.PictureBox pictureBox7;
@@ -2480,8 +2547,24 @@ namespace restaurant
         private System.Windows.Forms.Label label20;
         private MaterialSkin.Controls.MaterialButton buttonAddProduct;
         private MaterialSkin.Controls.MaterialButton buttonEmployeeAdd;
-        private MaterialSkin.Controls.MaterialCard cardBillProduct;
+        private MaterialSkin.Controls.MaterialCard cardBillProducts;
         private MaterialSkin.Controls.MaterialCard cardBillTable;
         private MaterialSkin.Controls.MaterialTextBox txtAccountPhoneNumber;
+        private System.Windows.Forms.Label label6;
+        private Guna.UI2.WinForms.Guna2CircleButton buttonLogout;
+        private Guna.UI2.WinForms.Guna2ProgressIndicator progressIndicatorProduct;
+        private MaterialSkin.Controls.MaterialListView categoryListView;
+        private System.Windows.Forms.ColumnHeader id;
+        private System.Windows.Forms.ColumnHeader image;
+        private System.Windows.Forms.ColumnHeader name;
+        private System.Windows.Forms.ColumnHeader description;
+        private System.Windows.Forms.ColumnHeader createdAt;
+        private System.Windows.Forms.ColumnHeader updatedAt;
+        private System.Windows.Forms.ColumnHeader action;
+        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
+        private MaterialSkin.Controls.MaterialButton buttonBillPrintBill;
+        private MaterialSkin.Controls.MaterialButton buttonBillPayment;
+        private Guna.UI2.WinForms.Guna2HtmlLabel labelTimeNow;
+        private System.Windows.Forms.Timer timer;
     }
 }

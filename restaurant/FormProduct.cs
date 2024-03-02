@@ -260,19 +260,19 @@ namespace restaurant
             }
         }
 
-        private void TxtProductDescription_Validating(object sender, CancelEventArgs e)
-        {
-            MaterialMultiLineTextBox2 textBox = sender as MaterialMultiLineTextBox2;
-            if (string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                errorProvider.SetError(textBox, "Vui lòng nhập mô tả sản phẩm");
+        //private void TxtProductDescription_Validating(object sender, CancelEventArgs e)
+        //{
+        //    MaterialMultiLineTextBox2 textBox = sender as MaterialMultiLineTextBox2;
+        //    if (string.IsNullOrWhiteSpace(textBox.Text))
+        //    {
+        //        errorProvider.SetError(textBox, "Vui lòng nhập mô tả sản phẩm");
                 
-            }
-            else
-            {
-                errorProvider.SetError(textBox, "");
-            }
-        }
+        //    }
+        //    else
+        //    {
+        //        errorProvider.SetError(textBox, "");
+        //    }
+        //}
 
         private void TxtProductColor_Validating(object sender, CancelEventArgs e)
         {
