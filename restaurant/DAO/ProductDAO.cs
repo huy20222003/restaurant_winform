@@ -34,6 +34,13 @@ namespace restaurant.DAO
             return null;
         }
 
+        public DataTable GetProductByName(string name)
+        {
+            string query = string.Format("SELECT * FROM Product WHERE name LIKE N'%{0}%'", name);
+            DataTable data = DataProvider.Instance.ExecuteQuery(query);
+            return data;
+        }
+
         public DataTable GetProductByCategoryId(int categoryId)
         {
             return DataProvider.Instance.ExecuteQuery("SELECT * FROM Product WHERE CategoryId = " + categoryId);

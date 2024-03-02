@@ -23,11 +23,16 @@ namespace restaurant.DAO
 
         public Role GetRoleById(int roleId)
         {
-            DataTable data = DataProvider.Instance.ExecuteQuery("SELECT * FROM Role WHERE ID = " + roleId);
+            string query = "SELECT * FROM Role WHERE ID = @roleId";
+            DataTable data = DataProvider.Instance.ExecuteQuery(query, new object[] { roleId });
 
-            foreach (DataRow row in data.Rows)
+            if (data.Rows.Count > 0)
             {
-                return new Role(row);
+                DataRow row = data.Rows[0];
+                int id = Convert.ToInt32(row["ID"]);
+                string name = row["Name"].ToString();
+                string description = row["Description"].ToString();
+                return new Role(id, name, description);
             }
 
             return null;

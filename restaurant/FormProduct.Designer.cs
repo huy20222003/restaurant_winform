@@ -337,8 +337,6 @@
             this.txtProductDescription.TabStop = false;
             this.txtProductDescription.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtProductDescription.UseSystemPasswordChar = false;
-            this.txtProductDescription.Validated += new System.EventHandler(this.TxtProductDescription_Validated);
-            this.txtProductDescription.Validating += new System.ComponentModel.CancelEventHandler(this.TxtProductDescription_Validating);
             // 
             // txtProductColor
             // 

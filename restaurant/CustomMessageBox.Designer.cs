@@ -75,6 +75,7 @@
             this.button_cancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_cancel.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.button_cancel.Depth = 0;
+            this.button_cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button_cancel.ForeColor = System.Drawing.Color.White;
             this.button_cancel.HighEmphasis = true;
             this.button_cancel.Icon = null;
@@ -97,11 +98,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.White;
+            this.CancelButton = this.button_cancel;
             this.ClientSize = new System.Drawing.Size(517, 215);
             this.Controls.Add(this.button_cancel);
             this.Controls.Add(this.button_confirm);
             this.Controls.Add(this.label_message);
             this.FormStyle = MaterialSkin.Controls.MaterialForm.FormStyles.ActionBar_None;
+            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CustomMessageBox";
             this.Padding = new System.Windows.Forms.Padding(3, 24, 3, 3);
