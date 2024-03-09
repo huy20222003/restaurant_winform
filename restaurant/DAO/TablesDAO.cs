@@ -35,7 +35,8 @@ namespace restaurant.DAO
 
         public DataTable GetTableByIdOrName(string searchValue)
         {
-            DataTable data = DataProvider.Instance.ExecuteQuery("SELECT * FROM Tables WHERE ID = " + searchValue + "OR Name = " + searchValue);
+            string query = string.Format("SELECT * FROM Tables WHERE name LIKE N'%{0}%' OR id LIKE '{1}'", searchValue, searchValue);
+            DataTable data = DataProvider.Instance.ExecuteQuery(query);
 
             return data;
         }
@@ -51,6 +52,14 @@ namespace restaurant.DAO
         public bool UpdateTable(int tableId, string name, string description, string status, string updatedAt)
         {
             string query = string.Format("UPDATE Tables SET Name = N'{0}', Description = N'{1}', Status = N'{2}', UpdatedAt = N'{3}' WHERE ID = {4}", name, description, status, updatedAt, tableId);
+            int result = DataProvider.Instance.ExecuteNonQuery(query);
+
+            return result > 0;
+        }
+
+        public bool UpdateTableStatus(int tableId, string status, string updatedAt)
+        {
+            string query = string.Format("UPDATE Tables SET Status = N'{0}', UpdatedAt = N'{1}' WHERE ID = {2}", status, updatedAt, tableId);
             int result = DataProvider.Instance.ExecuteNonQuery(query);
 
             return result > 0;

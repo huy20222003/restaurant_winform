@@ -40,7 +40,6 @@ namespace restaurant
         public FormTable(string id, string name, string description, string status, bool isEdit)
         {
             InitializeComponent();
-            this.StartPosition = FormStartPosition.CenterScreen;
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
@@ -51,6 +50,7 @@ namespace restaurant
                 Accent.LightBlue200,
                 TextShade.WHITE
             );
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.ID = int.Parse(id);
             this.isEdit = isEdit;
             if (isEdit)
@@ -76,7 +76,7 @@ namespace restaurant
 
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(description))
             {
-                CustomMessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Vui lòng nhập đầy đủ thông tin!", ToolTipIcon.Warning);
             }
             else
             { 
@@ -91,13 +91,13 @@ namespace restaurant
                     if (response)
                     {
                         this.getListTable();
-                        CustomMessageBox.Show("Sửa bàn thành công");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật bàn thành công", ToolTipIcon.Info);
                         this.Close();
                     }
                     else
                     {
                         this.getListTable();
-                        CustomMessageBox.Show("Sửa bàn thất bại");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật bàn thất bại", ToolTipIcon.Error);
                         this.Close();
                     }
                 }
@@ -108,13 +108,13 @@ namespace restaurant
                     if (response)
                     {
                         this.getListTable();
-                        CustomMessageBox.Show("Thêm bàn thành công");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm bàn thành công", ToolTipIcon.Info);
                         this.Close();
                     }
                     else
                     {
                         this.getListTable();
-                        CustomMessageBox.Show("Thêm bàn thất bại");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm bàn thất bại", ToolTipIcon.Error);
                         this.Close();
                     }
                 }
@@ -127,13 +127,13 @@ namespace restaurant
             if (response)
             {
                 this.getListTable();
-                CustomMessageBox.Show("Xoá bàn thành công");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Xoá bàn thành công", ToolTipIcon.Info);
                 this.Close();
             }
             else
             {
                 this.getListTable();
-                CustomMessageBox.Show("Xoá bàn thất bại");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Xoá bàn thất bại", ToolTipIcon.Error);
                 this.Close();
             }
         }

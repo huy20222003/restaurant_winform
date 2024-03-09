@@ -24,6 +24,7 @@ using CloudinaryDotNet.Actions;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Diagnostics;
 using Guna.UI2.WinForms;
+using Sunny.UI;
 
 namespace restaurant
 {
@@ -32,7 +33,8 @@ namespace restaurant
         private string employee_username;
         private Employee currrent_employee;
         private FlowLayoutPanel flowLayoutPanel;
-        private PictureBox moreOptionsPictureBox;
+        private int itemsPerPage = 10; // Số lượng mục trên mỗi trang
+        private int currentPage = 1; // Trang hiện tại
         public Main()
         {
             InitializeComponent();
@@ -47,7 +49,7 @@ namespace restaurant
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.ColorScheme = new ColorScheme(
+            materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
                 Primary.Blue800,
                 Primary.Blue900,
                 Primary.Blue500,
@@ -164,12 +166,12 @@ namespace restaurant
             }
 
             //gọi hàm
-            getEmployeeCount();
-            getProductSelledCount();
-            getRevenue();
-            getBillCount();
-            lineChart();
-            pieChart();
+            this.getEmployeeCount();
+            this.getProductSelledCount();
+            this.getRevenue();
+            this.getBillCount();
+            this.lineChart();
+            this.pieChart();
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -183,6 +185,16 @@ namespace restaurant
                     {
                         Image image = Image.FromStream(stream);
                         pictureBoxAccountAvatar.Image = image;
+                        pictureBoxDashboardEmployeeAvatar.Image = image;
+                        pictureBoxDashboardEmployeeAvatar1.Image = image;
+                        pictureBoxDashboardEmployeeAvatar3.Image = image;
+                        pictureBoxDashboardEmployeeAvatar4.Image = image;
+                        pictureBoxDashboardEmployeeAvatar5.Image = image;
+                        pictureBoxDashboardEmployeeAvatar6.Image = image;
+                        pictureBoxDashboardEmployeeAvatar7.Image = image;
+                        pictureBoxDashboardEmployeeAvatar8.Image = image;
+                        pictureBoxDashboardEmployeeAvatar9.Image = image;
+                        pictureBoxDashboardEmployeeAvatar10.Image = image;
                     }
                 }
             }
@@ -193,12 +205,43 @@ namespace restaurant
             txtAccountUsername.Text = this.currrent_employee.UserName;
             txtAccountAddress.Text = this.currrent_employee.Address;
             txtAccountPhoneNumber.Text = this.currrent_employee.PhoneNumber;
-            comboBoxAccountGender.SelectedItem = this.currrent_employee.Gender;
-            comboBoxAccountAge.SelectedItem = this.currrent_employee.Age;
-            this.reportViewer1.RefreshReport();
+            comboBoxAccountGender.Text = this.currrent_employee.Gender;
+            comboBoxAccountAge.Text = this.currrent_employee.Age.ToString();
+
+            labelDashboardEmployeeUsername.Text = this.currrent_employee.UserName;
+            labelDashboardEmployeeUsername1.Text = this.currrent_employee.UserName;
+            labelDashboardEmployeeUsername3.Text = this.currrent_employee.UserName;
+            labelDashboardEmployeeUsername4.Text = this.currrent_employee.UserName;
+            labelDashboardEmployeeUsername5.Text = this.currrent_employee.UserName;
+            labelDashboardEmployeeUsername6.Text = this.currrent_employee.UserName;
+            labelDashboardEmployeeUsername7.Text = this.currrent_employee.UserName;
+            labelDashboardEmployeeUsername8.Text = this.currrent_employee.UserName;
+            labelDashboardEmployeeUsername9.Text = this.currrent_employee.UserName;
+            labelDashboardEmployeeUsername10.Text = this.currrent_employee.UserName;
+
+            buttonDashboardLogout.Click += buttonLogout_Click;
+            buttonDashboardLogout1.Click += buttonLogout_Click;
+            buttonDashboardLogout3.Click += buttonLogout_Click;
+            buttonDashboardLogout4.Click += buttonLogout_Click;
+            buttonDashboardLogout5.Click += buttonLogout_Click;
+            buttonDashboardLogout6.Click += buttonLogout_Click;
+            buttonDashboardLogout7.Click += buttonLogout_Click;
+            buttonDashboardLogout8.Click += buttonLogout_Click;
+            buttonDashboardLogout9.Click += buttonLogout_Click;
+            buttonDashboardLogout10.Click += buttonLogout_Click;
+
             timer.Interval = 1000; // Cập nhật mỗi giây
             timer.Tick += Timer_Tick;
             timer.Start();
+
+            for (int i = 1; i <= 100; i++)
+            {
+                comboBoxAccountAge.Items.Add(i);
+            }
+
+            //uiToolTip1.SetToolTip(buttonAddProduct, "Thêm sản phẩm");
+            guna2HtmlToolTip1.SetToolTip(buttonAddProduct, "Thêm sản phẩm");
+            this.reportViewer1.RefreshReport();
         }
 
         private void InitializeFlowLayoutPanel()
@@ -238,19 +281,26 @@ namespace restaurant
 
         //------------------------------------TAB CATEGORY----------------------------------------------------------------------
         //hàm lấy ra tất cả danh mục và hiển thị ra listview
-        private void getListCategoryToListView()
+        private void getListCategoryToListView(int page)
         {
+            // Tính chỉ số bắt đầu và kết thúc của dữ liệu trên trang hiện tại
+            int startIndex = (page - 1) * itemsPerPage;
+            int endIndex = Math.Min(startIndex + itemsPerPage - 1, categoryListView.Items.Count - 1);
+
+            CustomMessageBox.Show(startIndex.ToString() + endIndex.ToString());
+
             // Lấy danh sách các danh mục từ cơ sở dữ liệu
             DataTable dataTable = CategoryDAO.Instance.GetListCategory();
 
+            // Xóa danh sách hiện tại trước khi thêm mới
             categoryListView.Items.Clear();
 
-            // Kiểm tra nếu có dữ liệu trả về từ cơ sở dữ liệu
+            // Kiểm tra nếu có dữ liệu trả về từ cơ sở dữ liệu và chỉ hiển thị dữ liệu trên trang hiện tại
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
-                // Duyệt qua mỗi dòng dữ liệu trong DataTable
-                foreach (DataRow row in dataTable.Rows)
+                for (int i = startIndex; i <= endIndex; i++)
                 {
+                    DataRow row = dataTable.Rows[i];
                     // Tạo một ListViewItem mới và thêm các dữ liệu vào
                     ListViewItem item = new ListViewItem(row["id"].ToString());
                     item.SubItems.Add(row["image"].ToString());
@@ -266,13 +316,31 @@ namespace restaurant
             }
         }
 
+        // Xử lý sự kiện PageChanged của UIMiniPagination
+        private void UpdateCategoryListView()
+        {
+            getListCategoryToListView(currentPage);
+            // Cập nhật lại trạng thái của UIMiniPagination
+            int totalItems = CategoryDAO.Instance.GetTotalCategories(); // Lấy tổng số danh mục từ cơ sở dữ liệu
+            int totalPages = (int)Math.Ceiling((double)totalItems / itemsPerPage);
+            categoryPagnation.TotalCount = totalPages;
+            // Không có phương thức trực tiếp để cập nhật trang hiện tại, nên chúng ta cần cập nhật biến currentPage
+        }
+
+        // Xử lý sự kiện PageChanged của UIMiniPagination
+        private void categoryPagnation_PageChanged(object sender, object pagingSource, int pageIndex, int count)
+        {
+            currentPage = pageIndex + 1; // pageIndex bắt đầu từ 0, nên cần cộng thêm 1
+            UpdateCategoryListView();
+        }
+
 
         //hàm gọi form thêm danh mục
         private void buttonOpenFormAddCategory_Click(object sender, EventArgs e)
         {
             FormCategory formCategory = new FormCategory();
             formCategory.TopMost = true;
-            formCategory.getListCategory = getListCategoryToListView;
+            formCategory.getListCategory = UpdateCategoryListView;
             formCategory.Show();
         }
 
@@ -291,23 +359,23 @@ namespace restaurant
                 string description = selectedItem.SubItems[3].Text;
                 string imageUrl = selectedItem.SubItems[1].Text;
                 FormCategory formCategory = new FormCategory(id, name, description, imageUrl, isEdit);
-                formCategory.getListCategory = getListCategoryToListView;
+                formCategory.getListCategory = UpdateCategoryListView;
                 formCategory.Show();
             }
         }
 
-        private void buttonCategorySearch_Click(object sender, EventArgs e)
+        private void txtCategorySearch_TextChanged(object sender, EventArgs e)
         {
             string searchValue = txtCategorySearch.Text;
 
             if (searchValue == "")
             {
-                this.getListCategoryToListView();
+                this.UpdateCategoryListView();
             }
             else
             {
                 // Lấy danh sách các danh mục từ cơ sở dữ liệu
-                DataTable dataTable = CategoryDAO.Instance.SearchCategoryByName(searchValue);
+                DataTable dataTable = CategoryDAO.Instance.SearchCategoryByNameOrId(searchValue);
 
                 categoryListView.Items.Clear();
 
@@ -333,56 +401,62 @@ namespace restaurant
             }
         }
 
+
+
         //------------------------------------------------------------------------------------------------------------------------------
 
         //---------------------------------------TAB PRODUCT----------------------------------------------------------------------------
 
-        private void showProductItem()
+        private void ShowProductItems(DataTable productList)
         {
-            ClearCardItem();
-
             // Hiển thị hiệu ứng loader
             progressIndicatorProduct.Visible = true;
 
-            DataTable productList = ProductDAO.Instance.GetListProduct();
+            // Tạo mới FlowLayoutPanel
+            FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
+            flowLayoutPanel.Controls.Clear();
+            flowLayoutPanel.FlowDirection = (System.Windows.Forms.FlowDirection)System.Windows.FlowDirection.LeftToRight;
+            flowLayoutPanel.WrapContents = true;
+            flowLayoutPanel.AutoScroll = true;
+            flowLayoutPanel.Location = new System.Drawing.Point(10, 200);
+            flowLayoutPanel.Width = tabProduct.Width;
+            flowLayoutPanel.Height = tabProduct.Height;
 
+            flowLayoutPanel.Controls.Clear();
             // Lặp qua từng bản ghi trong DataTable
             foreach (DataRow row in productList.Rows)
             {
                 // Tạo một MaterialCard mới cho mỗi sản phẩm
                 MaterialCard cardProductItem = new MaterialCard();
-                cardProductItem.Width = 280; // Đặt độ rộng của thẻ sản phẩm
-                cardProductItem.Height = 360;
-                cardProductItem.Padding = new Padding(10); // Đặt padding cho thẻ sản phẩm
-                cardProductItem.Margin = new Padding(40, 150, 10, 10);
+                cardProductItem.Width = 340;
+                cardProductItem.Height = 180;
+                cardProductItem.Padding = new Padding(5);
+                cardProductItem.Margin = new Padding(10);
 
                 // Tạo PictureBox để hiển thị hình ảnh sản phẩm
                 PictureBox pictureBox = new PictureBox();
                 pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                 pictureBox.ImageLocation = row["ImageUrl"].ToString();
-                pictureBox.Location = new System.Drawing.Point(10, 10); // Đặt vị trí của PictureBox trong MaterialCard
-                pictureBox.Width = cardProductItem.Width;
-                pictureBox.Height = cardProductItem.Height / 3;
+                pictureBox.Location = new System.Drawing.Point(170, 0);
+                pictureBox.Width = cardProductItem.Width / 2;
+                pictureBox.Height = cardProductItem.Height;
                 pictureBox.InitialImage = Properties.Resources.logo_ver_2;
 
                 // Tạo các phần tử thông tin sản phẩm và đặt vị trí cho chúng
                 MaterialLabel labelNameValue = new MaterialLabel() { Text = row["Name"].ToString(), AutoSize = true, FontType = MaterialSkinManager.fontType.Body1 };
-                labelNameValue.Location = new System.Drawing.Point(10, 200); // Đặt vị trí của Label trong TableLayoutPanel
+                labelNameValue.Location = new System.Drawing.Point(10, 20);
 
-                MaterialLabel labelPriceValue = new MaterialLabel() { Text = row["Price"].ToString() + "VND", AutoSize = true, FontType = MaterialSkinManager.fontType.Body1 };
-                labelPriceValue.Location = new System.Drawing.Point(10, 240); // Đặt vị trí của Label trong TableLayoutPane
+                MaterialLabel labelPriceValue = new MaterialLabel() { Text = row["Price"].ToString() + "VND", AutoSize = true, FontType = MaterialSkinManager.fontType.H6 };
+                labelPriceValue.ForeColor = System.Drawing.Color.Blue;
+                labelPriceValue.Location = new System.Drawing.Point(10, 140);
 
-
-                MaterialButton buttonViewDetailProduct = new MaterialButton() { Text = "Xem chi tiết", AutoSize = true, Cursor = Cursors.Hand };
-                buttonViewDetailProduct.Location = new System.Drawing.Point(80, 280);
-
-                buttonViewDetailProduct.Click += buttonViewDetailProduct_Click;
-                buttonViewDetailProduct.Tag = row;
+                cardProductItem.Cursor = Cursors.Hand;
+                cardProductItem.DoubleClick += cardProductItem_DoubleClick;
+                cardProductItem.Tag = row;
 
                 cardProductItem.Controls.Add(pictureBox);
                 cardProductItem.Controls.Add(labelNameValue);
                 cardProductItem.Controls.Add(labelPriceValue);
-                cardProductItem.Controls.Add(buttonViewDetailProduct);
 
                 // Thêm thẻ sản phẩm vào FlowLayoutPanel
                 flowLayoutPanel.Controls.Add(cardProductItem);
@@ -395,11 +469,30 @@ namespace restaurant
             tabProduct.Controls.Add(flowLayoutPanel);
         }
 
+        private void ShowAllProducts()
+        {
+            DataTable productList = ProductDAO.Instance.GetListProduct();
+            this.ShowProductItems(productList);
+        }
 
-        private void buttonViewDetailProduct_Click(object sender, EventArgs e)
+        private void txtProductSearch_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtProductSearch.Text))
+            {
+                this.ShowAllProducts();
+            }
+            else
+            {
+                DataTable productList = ProductDAO.Instance.GetProductByName(txtProductSearch.Text);
+                this.ShowProductItems(productList);
+            }
+        }
+
+
+        private void cardProductItem_DoubleClick(object sender, EventArgs e)
         {
             bool isEdit = true;
-            DataRow productInfo = (sender as MaterialButton).Tag as DataRow;
+            DataRow productInfo = (sender as MaterialCard).Tag as DataRow;
 
             string id = productInfo["ID"].ToString();
             string name = productInfo["Name"].ToString();
@@ -415,7 +508,7 @@ namespace restaurant
 
             FormProduct formProduct = new FormProduct(id, name, description, imageUrl, price, priceSale, categoryId, status, color, size, quantity, isEdit);
             formProduct.TopMost = true;
-            formProduct.GetListProduct = this.showProductItem;
+            formProduct.GetListProduct = this.ShowAllProducts;
             formProduct.ShowDialog();
         }
 
@@ -423,7 +516,7 @@ namespace restaurant
         {
             FormProduct formProduct = new FormProduct();
             formProduct.TopMost = true;
-            formProduct.GetListProduct = this.showProductItem;
+            formProduct.GetListProduct = this.ShowAllProducts;
             formProduct.ShowDialog();
         }
 
@@ -487,7 +580,7 @@ namespace restaurant
             }
         }
 
-        private void buttonTableSearch_Click(object sender, EventArgs e)
+        private void txtTableSearch_TextChanged(object sender, EventArgs e)
         {
             string searchValue = txtTableSearch.Text;
 
@@ -535,22 +628,22 @@ namespace restaurant
 
             if (!Data.VerifyPassword(oldPassword, this.currrent_employee.Password))
             {
-                CustomMessageBox.Show("Mật khẩu cũ không đúng");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Mật khẩu không đúng", ToolTipIcon.Error);
             }
             else if (newPassword != confirmNewPassword)
             {
-                CustomMessageBox.Show("Mật khẩu nhập lại không khớp");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Mật khẩu nhập lại không khớp", ToolTipIcon.Error);
             }
-            else if (oldPassword == "" || newPassword == "" || confirmNewPassword == "")
+            else if (string.IsNullOrEmpty(oldPassword) || string.IsNullOrEmpty(newPassword) || string.IsNullOrEmpty(confirmNewPassword))
             {
-                CustomMessageBox.Show("Vui lòng nhập đầy đủ thông tin");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Vui lòng nhập đầy đủ thông tin", ToolTipIcon.Warning);
             }
             else
             {
                 bool response = EmployeeDAO.Instance.ResetPassword(this.currrent_employee.ID, Data.HashPassword(newPassword));
                 if (response)
                 {
-                    CustomMessageBox.Show("Cập nhật mật khẩu thành công");
+                    notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật mật khẩu thành công", ToolTipIcon.Info);
                     // Làm mới các trường nhập liệu
                     txtSettingOldPassword.Text = "";
                     txtSettingNewPassword.Text = "";
@@ -558,7 +651,7 @@ namespace restaurant
                 }
                 else
                 {
-                    CustomMessageBox.Show("Cập nhật mật khẩu thất bại");
+                    notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật mật khẩu thất bại", ToolTipIcon.Error);
                 }
             }
         }
@@ -579,7 +672,7 @@ namespace restaurant
                 cardEmployeeItem.Width = 600; // Đặt độ rộng của thẻ sản phẩm
                 cardEmployeeItem.Height = 250;
                 cardEmployeeItem.Padding = new Padding(10); // Đặt padding cho thẻ sản phẩm
-                cardEmployeeItem.Margin = new Padding(40, 150, 10, 10);
+                cardEmployeeItem.Margin = new Padding(20, 150, 10, 10);
 
                 // Tạo PictureBox để hiển thị hình ảnh sản phẩm
                 PictureBox pictureBox = new PictureBox();
@@ -702,7 +795,7 @@ namespace restaurant
         {
             if(txtAccountFullName.Text == "" || txtAccountUsername.Text == "" || txtAccountAddress.Text == "" || comboBoxAccountGender.SelectedItem == null || comboBoxAccountAge.SelectedItem == null || string.IsNullOrEmpty(txtAccountPhoneNumber.Text)) 
             {
-                CustomMessageBox.Show("Vui lòng nhập đầy đủ thông tin");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Vui lòng nhập đầy đủ thông tin!", ToolTipIcon.Warning);
             } 
             else
             {
@@ -711,10 +804,10 @@ namespace restaurant
                 bool response = EmployeeDAO.Instance.UpdateEmployeeDetail(this.currrent_employee.ID, txtAccountUsername.Text, txtAccountFullName.Text, comboBoxAccountGender.SelectedItem.ToString(), txtAccountAddress.Text, int.Parse(comboBoxAccountAge.SelectedItem.ToString()), txtAccountPhoneNumber.Text, formattedDate);
                 if (response)
                 {
-                    CustomMessageBox.Show("Cập nhật thông tin thành công");
+                    notifyIcon.ShowBalloonTip(5000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật thông tin thành công", ToolTipIcon.Info);
                 } else
                 {
-                    CustomMessageBox.Show("Cập nhật thông tin thất bại");
+                    notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật thông tin thất bại", ToolTipIcon.Error);
                 }
             }
         }
@@ -748,13 +841,23 @@ namespace restaurant
                 }
             }
         }
-
         private void buttonOpenFormAddRole_Click(object sender, EventArgs e)
         {
-            FormRole formRole = new FormRole();
-            formRole.TopMost = true;
-            formRole.getListRole = this.getListRoleToListView;
-            formRole.Show();
+            MaterialForm materialForm = new MaterialForm();
+            using(FormRole formRole = new FormRole())
+            {
+                materialForm.StartPosition = FormStartPosition.Manual;
+                materialForm.FormBorderStyle = FormBorderStyle.None;
+                materialForm.Opacity = 0.5d;
+                materialForm.BackColor = System.Drawing.Color.Black;
+                materialForm.Size = this.Size;
+                materialForm.Location = this.Location;
+                materialForm.ShowInTaskbar = false;
+                materialForm.Show();
+                formRole.Owner = materialForm;
+                formRole.ShowDialog();
+                materialForm.Dispose();
+            }
         }
 
         private void roleListView_SelectedIndexChanged(object sender, EventArgs e)
@@ -776,20 +879,19 @@ namespace restaurant
             }
         }
 
-        private void buttonRoleSearch_Click(object sender, EventArgs e)
+        private void txtRoleSearch_TextChanged(object sender, EventArgs e)
         {
-            string searchValue = txtTableSearch.Text;
+            string searchValue = txtRoleSearch.Text;
 
             if (searchValue == "")
             {
-                this.getListTableToListView();
+                this.getListRoleToListView();
             }
             else
             {
                 // Lấy danh sách các bàn từ cơ sở dữ liệu
-                DataTable dataTable = TablesDAO.Instance.GetTableByIdOrName(searchValue);
-
-                tableListView.Items.Clear();
+                DataTable dataTable = RoleDAO.Instance.GetRoleByIdOrName(searchValue);
+                roleListView.Items.Clear();
 
                 // Kiểm tra nếu có dữ liệu trả về từ cơ sở dữ liệu
                 if (dataTable != null && dataTable.Rows.Count > 0)
@@ -806,7 +908,7 @@ namespace restaurant
                         item.SubItems.Add("Sửa | Xoá");
 
                         // Thêm ListViewItem vào ListView
-                        tableListView.Items.Add(item);
+                        roleListView.Items.Add(item);
                     }
                 }
             }
@@ -818,7 +920,15 @@ namespace restaurant
 
         private void showTableInTabBill()
         {
-            ClearCardItem();
+            FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
+            flowLayoutPanel.Dock = DockStyle.Fill;
+            flowLayoutPanel.FlowDirection = (System.Windows.Forms.FlowDirection)System.Windows.FlowDirection.LeftToRight; // Hiển thị các thẻ theo chiều ngang
+            flowLayoutPanel.WrapContents = true; // Cho phép các thẻ xuống dòng khi không còn đủ chỗ
+            flowLayoutPanel.AutoScroll = true; // Hiển thị thanh cuộn nếu có quá nhiều thẻ
+            //this.ClearCardItem();
+            cardBillTable.Controls.Clear();
+            // Xoá tất cả các panel trước trong flowLayoutPanel
+            flowLayoutPanel.Controls.Clear();
             DataTable tableList = TablesDAO.Instance.GetListTable();
 
             // Lặp qua từng bản ghi trong DataTable
@@ -842,14 +952,15 @@ namespace restaurant
 
                 // Xác định trạng thái của bàn từ cột Status trong DataTable
                 string tableStatus = row["Status"].ToString();
-                if (tableStatus == "Inactive")
+                if (tableStatus == "inactive")
                 {
                     pictureBox.Image = Properties.Resources.table_inactive; // Hình ảnh cho trạng thái bàn "Không hoạt đọng"
                 }
-                else if (tableStatus == "Active")
+                else if (tableStatus == "active")
                 {
                     pictureBox.Image = Properties.Resources.table_active; // Hình ảnh cho trạng thái bàn "hoạt động"
-                } else if(tableStatus == "Used") 
+                }
+                else if (tableStatus == "used")
                 {
                     pictureBox.Image = Properties.Resources.table_used; // Hình ảnh cho trạng thái bàn "có người"
                 }
@@ -859,7 +970,7 @@ namespace restaurant
                 MaterialLabel labelNameValue = new MaterialLabel() { Text = row["Name"].ToString(), AutoSize = true, FontType = MaterialSkinManager.fontType.Body1 };
                 labelNameValue.Location = new System.Drawing.Point(20, 80); // Đặt vị trí của Label trong TableLayoutPanel
                                                                             // Tạo biểu tượng dấu ba chấm
-                moreOptionsPictureBox = new PictureBox();
+                PictureBox moreOptionsPictureBox = new PictureBox();
                 moreOptionsPictureBox.Image = Properties.Resources.more_option_icon; // Thay đổi hình ảnh theo nhu cầu
                 moreOptionsPictureBox.Size = new System.Drawing.Size(25, 25);
                 moreOptionsPictureBox.Location = new System.Drawing.Point(panelTable.Width - moreOptionsPictureBox.Width - 10, 10); // Đặt vị trí ở góc phải trên của panelTable
@@ -867,16 +978,64 @@ namespace restaurant
                 moreOptionsPictureBox.BringToFront();
 
                 // Gắn sự kiện MouseHover vào panelTable để hiển thị biểu tượng dấu ba chấm
-                pictureBox.MouseEnter += PictureBox_MouseEnter;
-                panelTable.MouseHover += PictureBox_MouseEnter;
-                pictureBox.MouseLeave += PictureBox_MouseLeave;
-                panelTable.MouseLeave += PictureBox_MouseLeave;
+                //pictureBox.MouseEnter += (sender, e) =>
+                //{
+                //    moreOptionsPictureBox.Visible = true;
+                //};
+                //pictureBox.MouseLeave += (sender, e) =>
+                //{
+                //    moreOptionsPictureBox.Visible = false;
+                //}; ;
 
                 pictureBox.Tag = row;
                 pictureBox.Click += showProductSelected;
 
                 // Gắn sự kiện Click vào biểu tượng dấu ba chấm
-                moreOptionsPictureBox.Click += MoreOptionsPictureBox_Click;
+                moreOptionsPictureBox.Click += (sender, e) =>
+                {
+                    // Tạo một ContextMenuStrip mới
+                    ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
+
+                    // Tạo một ToolStripMenuItem để thêm sản phẩm
+                    ToolStripMenuItem buttonBillAddBill = new ToolStripMenuItem("Tạo hoá đơn");
+                    ToolStripMenuItem buttonBillAddProduct = new ToolStripMenuItem("Thêm sản phẩm");
+                    ToolStripMenuItem buttonBillUpdateStatusTable = new ToolStripMenuItem("Cập nhật trạng thái bàn");
+                    buttonBillAddProduct.Height = 50;
+                    contextMenuStrip.Cursor = Cursors.Hand;
+                    buttonBillUpdateStatusTable.Tag = row;
+                    buttonBillUpdateStatusTable.Click += buttonBillUpdateStatusTable_Click;
+                    buttonBillAddBill.Tag = row;
+
+                    // Kiểm tra trạng thái của bàn và thêm sự kiện cho ToolStripMenuItem
+                    if (row["status"].ToString().ToLower() == "used")
+                    {
+                        buttonBillAddProduct.Tag = row;
+                        buttonBillAddProduct.Click += buttonBillAddProduct_Click; // Gán sự kiện cho mục 1
+
+                    }
+                    else
+                    {
+                        buttonBillAddProduct.ForeColor = System.Drawing.Color.DarkGray;
+
+                    }
+
+                    if (row["status"].ToString().ToLower() == "active")
+                    {
+                        buttonBillAddBill.Click += buttonBillAddBill_Click;
+                    }
+                    else
+                    {
+                        buttonBillAddBill.ForeColor = System.Drawing.Color.DarkGray;
+                    }
+
+                    // Thêm ToolStripMenuItem vào ContextMenuStrip
+                    contextMenuStrip.Items.Add(buttonBillAddBill);
+                    contextMenuStrip.Items.Add(buttonBillAddProduct);
+                    contextMenuStrip.Items.Add(buttonBillUpdateStatusTable);
+
+                    // Hiển thị menu tại vị trí của biểu tượng dấu ba chấm
+                    contextMenuStrip.Show(moreOptionsPictureBox, new System.Drawing.Point(0, moreOptionsPictureBox.Height), ToolStripDropDownDirection.BelowLeft);
+                };
 
                 // Thêm các controls vào panelTable
                 panelTable.Controls.Add(pictureBox);
@@ -889,117 +1048,166 @@ namespace restaurant
             cardBillTable.Controls.Add(flowLayoutPanel);
         }
 
-        // Sự kiện MouseHover của panelTable
-        private void PictureBox_MouseEnter(object sender, EventArgs e)
+        private void buttonBillAddBill_Click(object sender, EventArgs e)
         {
-            // Hiển thị biểu tượng dấu ba chấm khi di chuột qua panelTable
-            Panel panelTable = sender as Panel;
-            moreOptionsPictureBox.Visible = true;
-        }
-
-        // Sự kiện MouseLeave của panelTable
-        private void PictureBox_MouseLeave(object sender, EventArgs e)
-        {
-            // Ẩn biểu tượng dấu ba chấm khi chuột rời khỏi panelTable
-            moreOptionsPictureBox.Visible = false;
-        }
-
-        // Sự kiện Click của biểu tượng dấu ba chấm
-        private void MoreOptionsPictureBox_Click(object sender, EventArgs e)
-        {
-            PictureBox moreOptionsPictureBox = sender as PictureBox;
-            // Mở menu tùy chọn khi nhấp vào biểu tượng dấu ba chấm
-            ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
-            ToolStripMenuItem buttonBillAddProduct = new ToolStripMenuItem("Thêm sản phẩm");
-            buttonBillAddProduct.Height = 100;
-            buttonBillAddProduct.Click += buttonBillAddProduct_Click; // Gán sự kiện cho mục 1
-            contextMenuStrip.Items.Add(buttonBillAddProduct);
-
-            // Hiển thị menu tại vị trí của biểu tượng dấu ba chấm
-            moreOptionsPictureBox.ContextMenuStrip = contextMenuStrip;
-            contextMenuStrip.Cursor = Cursors.Hand;
-            contextMenuStrip.Show(moreOptionsPictureBox, new System.Drawing.Point(0, moreOptionsPictureBox.Height), ToolStripDropDownDirection.BelowLeft);
+            DataRow buttonAddBill = (sender as ToolStripItem).Tag as DataRow;
+            int tableId = int.Parse(buttonAddBill["id"].ToString());
+            decimal totalPrices = 0;
+            string status = "unpaid";
+            string paymentMethod = "";
+            bool response = BillDAO.Instance.InsertBill(totalPrices, status, paymentMethod, tableId);
+            if(response)
+            {
+                string tableStatus = "used";
+                DateTime updatedAt = DateTime.Now; // Đây là đối tượng DateTime cần chuyển đổi
+                string formattedDate = updatedAt.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                bool tableResponse = TablesDAO.Instance.UpdateTableStatus(tableId, tableStatus, formattedDate);
+                if(tableResponse)
+                {
+                    this.showTableInTabBill();
+                    notifyIcon.ShowBalloonTip(5000, "Thông báo từ Góc Bếp Nhỏ", "Tạo hoá đơn thành công", ToolTipIcon.Info);
+                } else
+                {
+                    notifyIcon.ShowBalloonTip(5000, "Thông báo từ Góc Bếp Nhỏ", "Tạo hoá đơn thất bại", ToolTipIcon.Error);
+                }
+            } else
+            {
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Tạo hoá đơn thất bại", ToolTipIcon.Error);
+            }
         }
 
         private void buttonBillAddProduct_Click(object sender, EventArgs e)
         {
-            FormAddProductToBill formAddProductToBill = new FormAddProductToBill();
-            formAddProductToBill.TopMost = true;
-            formAddProductToBill.Show();
+            DataRow tableInfo = (sender as ToolStripItem).Tag as DataRow;
+            if (tableInfo != null)
+            {
+                int tableId;
+                if (int.TryParse(tableInfo["ID"].ToString(), out tableId))
+                {
+                    DataTable dataTable = BillDAO.Instance.GetLatestBillByTableId(tableId);
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        // Lấy ra dòng đầu tiên từ DataTable
+                        DataRow billInfo = dataTable.Rows[0];
+                        FormAddProductToBill formAddProductToBill = new FormAddProductToBill(int.Parse(billInfo["id"].ToString()));
+                        formAddProductToBill.TopMost = true;
+                        formAddProductToBill.Show();
+                    }
+                }
+            }
+        }
+
+        private void buttonBillUpdateStatusTable_Click(object sender, EventArgs e)
+        {
+            DataRow buttonUpdate = (sender as ToolStripItem).Tag as DataRow;
+            string id = buttonUpdate["id"].ToString();
+            string status = buttonUpdate["status"].ToString();
+
+            FormUpdateTableStatus formUpdateTableStatus = new FormUpdateTableStatus(id, status);
+            formUpdateTableStatus.TopMost = true;
+            formUpdateTableStatus.showTableInBill = this.showTableInTabBill;
+            formUpdateTableStatus.Show();
         }
 
         private void showProductSelected(object sender, EventArgs e)
         {
-            ClearCardItem();
             DataRow tableInfo = (sender as PictureBox).Tag as DataRow;
             if(tableInfo != null)
             {
-                if (tableInfo["Status"].ToString() == "Active")
+                if (tableInfo["Status"].ToString() != "inactive")
                 {
-                    int defaultId = 1;
-                    int id;
-                    if (int.TryParse(tableInfo["ID"].ToString(), out id))
+                    int tableId;
+                    if (int.TryParse(tableInfo["ID"].ToString(), out tableId))
                     {
-                        DataTable productList = BillDetailDAO.Instance.GetProductsByTableId(id != null ? defaultId : id);
-
-                        if(productList != null)
+                        // Xoá tất cả các panel trước trong cardBillProducts
+                        cardBillProducts.Controls.Clear();
+                        // Xoá tất cả các panel trước trong flowLayoutPanel
+                        flowLayoutPanel.Controls.Clear();
+                        DataTable dataTable = BillDAO.Instance.GetLatestBillByTableId(tableId);
+                        if (dataTable.Rows.Count > 0)
                         {
-                            foreach (DataRow row in productList.Rows)
+                            // Lấy ra dòng đầu tiên từ DataTable
+                            DataRow firstRow = dataTable.Rows[0];
+
+                            DataTable productList = BillDetailDAO.Instance.GetBillDetailsByBillId(int.Parse(firstRow["id"].ToString()));
+
+                            if (productList.Rows.Count > 0)
                             {
-                                Product product = ProductDAO.Instance.GetProductById(int.Parse(row["ProductId"].ToString()));
-                                // Tạo một MaterialCard mới cho mỗi sản phẩm
-                                Panel panelTable = new Panel();
-                                panelTable.Width = cardBillProducts.Width; // Đặt độ rộng của thẻ sản phẩm
-                                panelTable.Height = 80;
-                                panelTable.Margin = new Padding(10, 10, 30, 10);
-                                panelTable.Cursor = Cursors.Hand;
+                                foreach (DataRow row in productList.Rows)
+                                {
+                                    Product product = ProductDAO.Instance.GetProductById(int.Parse(row["ProductId"].ToString()));
+                                    // Tạo một MaterialCard mới cho mỗi sản phẩm
+                                    Panel panelProduct = new Panel();
+                                    panelProduct.Width = cardBillProducts.Width; // Đặt độ rộng của thẻ sản phẩm
+                                    panelProduct.Height = 80;
+                                    panelProduct.Margin = new Padding(10, 10, 30, 10);
 
-                                // Tạo PictureBox để hiển thị hình ảnh sản phẩm
-                                PictureBox pictureBox = new PictureBox();
-                                pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                                pictureBox.Location = new System.Drawing.Point(0, 0); // Đặt vị trí của PictureBox trong panel
-                                pictureBox.Width = 80;
-                                pictureBox.Height = panelTable.Height;
-                                pictureBox.ImageLocation = product.ImageUrl;
-                                pictureBox.InitialImage = Properties.Resources.logo_ver_2;
+                                    // Tạo PictureBox để hiển thị hình ảnh sản phẩm
+                                    PictureBox pictureBox = new PictureBox();
+                                    pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                                    pictureBox.Location = new System.Drawing.Point(0, 0); // Đặt vị trí của PictureBox trong panel
+                                    pictureBox.Width = 80;
+                                    pictureBox.Height = panelProduct.Height;
+                                    pictureBox.ImageLocation = product.ImageUrl;
+                                    pictureBox.InitialImage = Properties.Resources.logo_ver_2;
 
-                                // Tạo các phần tử thông tin sản phẩm và đặt vị trí cho chúng
-                                MaterialLabel labelNameValue = new MaterialLabel() { Text = product.Name.ToString(), AutoSize = true, FontType = MaterialSkinManager.fontType.Subtitle1 };
-                                labelNameValue.Location = new System.Drawing.Point(92, 14); // Đặt vị trí của Label trong TableLayoutPanel
-                                labelNameValue.Margin = new Padding(5, 0, 5, 0);
+                                    // Tạo các phần tử thông tin sản phẩm và đặt vị trí cho chúng
+                                    MaterialLabel labelNameValue = new MaterialLabel() { Text = product.Name.ToString(), AutoSize = true, FontType = MaterialSkinManager.fontType.Subtitle1 };
+                                    labelNameValue.Location = new System.Drawing.Point(92, 14); // Đặt vị trí của Label trong TableLayoutPanel
+                                    labelNameValue.Margin = new Padding(5, 0, 5, 0);
 
-                                MaterialLabel labelSizeValue = new MaterialLabel() { Text = "size: " + row["Size"].ToString(), AutoSize = true, FontType = MaterialSkinManager.fontType.Caption };
-                                labelSizeValue.Location = new System.Drawing.Point(92, 48); // Đặt vị trí của Label trong TableLayoutPanel
-                                labelNameValue.Margin = new Padding(5, 0, 5, 0);
+                                    MaterialLabel labelSizeValue = new MaterialLabel() { Text = "size: " + row["Size"].ToString(), AutoSize = true, FontType = MaterialSkinManager.fontType.Caption };
+                                    labelSizeValue.Location = new System.Drawing.Point(92, 48); // Đặt vị trí của Label trong TableLayoutPanel
+                                    labelNameValue.Margin = new Padding(5, 0, 5, 0);
 
-                                MaterialLabel labeColorValue = new MaterialLabel() { Text = "color: " + row["Color"].ToString(), AutoSize = true, FontType = MaterialSkinManager.fontType.Caption };
-                                labeColorValue.Location = new System.Drawing.Point(150, 48); // Đặt vị trí của Label trong TableLayoutPanel
-                                labeColorValue.Margin = new Padding(5, 0, 5, 0);
+                                    MaterialLabel labeColorValue = new MaterialLabel() { Text = "color: " + row["Color"].ToString(), AutoSize = true, FontType = MaterialSkinManager.fontType.Caption };
+                                    labeColorValue.Location = new System.Drawing.Point(170, 48); // Đặt vị trí của Label trong TableLayoutPanel
+                                    labeColorValue.Margin = new Padding(5, 0, 5, 0);
 
-                                MaterialLabel labelQuantityValue = new MaterialLabel() { Text = "x" + row["Quantity"].ToString(), AutoSize = true, FontType = MaterialSkinManager.fontType.Body1 };
-                                labelQuantityValue.Location = new System.Drawing.Point(324, 32); // Đặt vị trí của Label trong TableLayoutPanel
-                                labelQuantityValue.Margin = new Padding(5, 0, 5, 0);
+                                    MaterialLabel labelQuantityValue = new MaterialLabel() { Text = "x" + row["Quantity"].ToString(), AutoSize = true, FontType = MaterialSkinManager.fontType.Body1 };
+                                    labelQuantityValue.Location = new System.Drawing.Point(300, 32); // Đặt vị trí của Label trong TableLayoutPanel
+                                    labelQuantityValue.Margin = new Padding(5, 0, 5, 0);
 
-                                MaterialLabel labelPriceValue = new MaterialLabel() { Text = product.Price + "đ", AutoSize = true, FontType = MaterialSkinManager.fontType.Body1 };
-                                labelPriceValue.Location = new System.Drawing.Point(360, 32); // Đặt vị trí của Label trong TableLayoutPanel
-                                labelPriceValue.Margin = new Padding(5, 0, 5, 0);
+                                    MaterialLabel labelPriceValue = new MaterialLabel() { Text = product.Price + "đ", AutoSize = true, FontType = MaterialSkinManager.fontType.Body1 };
+                                    labelPriceValue.Location = new System.Drawing.Point(320, 32); // Đặt vị trí của Label trong TableLayoutPanel
+                                    labelPriceValue.Margin = new Padding(5, 0, 5, 0);
 
-                                // Thêm các controls vào panelTable
-                                panelTable.Controls.Add(pictureBox);
-                                panelTable.Controls.Add(labelNameValue);
-                                panelTable.Controls.Add(labelSizeValue);
-                                panelTable.Controls.Add(labeColorValue);
-                                panelTable.Controls.Add(labelQuantityValue);
-                                panelTable.Controls.Add(labelPriceValue);
+                                    PictureBox pictureBoxDeleteProduct = new PictureBox();
+                                    pictureBoxDeleteProduct.SizeMode = PictureBoxSizeMode.StretchImage;
+                                    pictureBoxDeleteProduct.Location = new System.Drawing.Point(380, 4); // Đặt vị trí của PictureBox trong panel
+                                    pictureBoxDeleteProduct.Image = Properties.Resources.icon_close;
+                                    pictureBoxDeleteProduct.Size = new System.Drawing.Size(16, 16);
+                                    pictureBoxDeleteProduct.Cursor = Cursors.Hand;
 
-                                // Thêm panelTable vào FlowLayoutPanel
-                                flowLayoutPanel.Controls.Add(panelTable);
+                                    pictureBoxDeleteProduct.Tag = row;
+                                    pictureBoxDeleteProduct.Click += PictureBoxDeleteProduct_Click;
+                                    
+                                    // Thêm các controls vào panelTable
+                                    panelProduct.Controls.Add(pictureBox);
+                                    panelProduct.Controls.Add(labelNameValue);
+                                    panelProduct.Controls.Add(labelSizeValue);
+                                    panelProduct.Controls.Add(labeColorValue);
+                                    panelProduct.Controls.Add(labelQuantityValue);
+                                    panelProduct.Controls.Add(labelPriceValue);
+                                    panelProduct.Controls.Add(pictureBoxDeleteProduct);
+
+
+                                    // Thêm panelTable vào FlowLayoutPanel
+                                    flowLayoutPanel.Controls.Add(panelProduct);
+                                }
+                                cardBillProducts.Controls.Add(flowLayoutPanel);
                             }
-                            cardBillProducts.Controls.Add(flowLayoutPanel);
-                        }
-                        else
+                            else
+                            {
+                                MaterialLabel labelEmptyProduct = new MaterialLabel() { Text = "Chưa gọi món ăn", AutoSize = true, FontType = MaterialSkinManager.fontType.Body1 };
+                                labelEmptyProduct.Location = new System.Drawing.Point(10, 250); // Đặt vị trí của Label trong TableLayoutPanel
+                                labelEmptyProduct.Margin = new Padding(5, 0, 5, 0);
+                                flowLayoutPanel.Controls.Add(labelEmptyProduct);
+                                cardBillProducts.Controls.Add(flowLayoutPanel);
+                            }
+                        } else
                         {
-                            MaterialLabel labelEmptyProduct = new MaterialLabel() { Text = "Chưa gọi món ăn", AutoSize = true, FontType = MaterialSkinManager.fontType.Body1 };
+                            MaterialLabel labelEmptyProduct = new MaterialLabel() { Text = "Bàn này chưa sử dụng", AutoSize = true, FontType = MaterialSkinManager.fontType.Body1 };
                             labelEmptyProduct.Location = new System.Drawing.Point(10, 250); // Đặt vị trí của Label trong TableLayoutPanel
                             labelEmptyProduct.Margin = new Padding(5, 0, 5, 0);
                             flowLayoutPanel.Controls.Add(labelEmptyProduct);
@@ -1008,18 +1216,48 @@ namespace restaurant
                     }
                     else
                     {
-                        CustomMessageBox.Show("ID bàn không tồn tại!");
+                        notifyIcon.ShowBalloonTip(5000, "Thông báo từ Góc Bếp Nhỏ", "ID bàn không tồn tại!", ToolTipIcon.Error);
                     }
                 }
                 else
                 {
                     // Hiển thị thông báo cho người dùng rằng bàn không có sẵn
-                    CustomMessageBox.Show("Bàn này không phải là bàn đang hoạt động!");
+                    notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Bàn này không phải là bàn đang hoạt động!", ToolTipIcon.Warning);
                 }
             }
             else
             {
-                CustomMessageBox.Show("Không tìm thấy dữ liệu bàn này!");
+                notifyIcon.ShowBalloonTip(5000, "Thông báo từ Góc Bếp Nhỏ", "Không tìm thấy dữ liệu bàn này!", ToolTipIcon.Warning);
+            }
+        }
+
+        private void PictureBoxDeleteProduct_Click(object sender, EventArgs e)
+        {
+            DataRow billDetailInfo = (sender as PictureBox).Tag as DataRow;
+            if(billDetailInfo != null)
+            {
+                bool response = BillDetailDAO.Instance.DeleteProductFromBill(int.Parse(billDetailInfo["id"].ToString()));
+                if(response)
+                {
+                    notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Xoá sản phẩm thành công", ToolTipIcon.Info);
+                } else
+                {
+                    notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Xoá sản phẩm thất bại", ToolTipIcon.Error);
+                }
+            }
+        }
+
+        private void buttonBillPayment_Click(object sender, EventArgs e)
+        {
+            DateTime updatedAt = DateTime.Now; // Đây là đối tượng DateTime cần chuyển đổi
+            string formattedDate = updatedAt.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            bool response = BillDAO.Instance.UpdateBillStatus(16, "paid", formattedDate);
+            if(response)
+            {
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thanh toán thành công", ToolTipIcon.Info);
+            } else
+            {
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thanh toán thất bại", ToolTipIcon.Error);
             }
         }
 
@@ -1033,14 +1271,16 @@ namespace restaurant
                 case 0:
                     this.getEmployeeCount();
                     this.getProductSelledCount();
-                    this.getBillCount();
                     this.getRevenue();
+                    this.getBillCount();
+                    this.lineChart();
+                    this.pieChart();
                     break;
                 case 1:
-                    this.getListCategoryToListView();
+                    this.UpdateCategoryListView();
                     break;
                 case 2:
-                    this.showProductItem();
+                    this.ShowAllProducts();
                     break;
                 case 3:
                     this.getListTableToListView();
@@ -1095,9 +1335,19 @@ namespace restaurant
             DateTime now = DateTime.Now;
 
             // Hiển thị ngày tháng thứ giờ phút giây hiện tại trên label
-            labelTimeNow.Text = string.Format("Thời gian hiện tại: {0:00}/{1:00}/{2:00} {3:00}:{4:00}:{5:00}",
+            string time = string.Format("Thời gian hiện tại: {0:00}/{1:00}/{2:00} {3:00}:{4:00}:{5:00}",
                                                 now.Day, now.Month, now.Year, 
                                                 now.Hour, now.Minute, now.Second);
+            labelTimeNow.Text = time;
+            labelTimeNow1.Text = time;
+            labelTimeNow2.Text = time;
+            labelTimeNow3.Text = time;
+            labelTimeNow4.Text = time;
+            labelTimeNow5.Text = time;
+            labelTimeNow6.Text = time;
+            labelTimeNow7.Text = time;
+            labelTimeNow8.Text = time;
+            labelTimeNow9.Text = time;
         }
     }
 }

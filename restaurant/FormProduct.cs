@@ -100,22 +100,11 @@ namespace restaurant
 
         private void btnChooseImage_Click(object sender, EventArgs e)
         {
-            if (pictureBox.Image == null)
+            openFileDialog.Filter = "Image Files (*.jpg, *.jpeg, *.png)|*.jpg; *.jpeg; *.png";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                // Nếu hình ảnh chưa được chọn, hiển thị thông báo lỗi
-                errorProvider.SetError(btnChooseImage, "Vui lòng chọn hình ảnh!");
-            }
-            else
-            {
-                // Nếu hình ảnh đã được chọn, xóa thông báo lỗi (nếu có)
-                errorProvider.SetError(btnChooseImage, "");
-                // Tiếp tục xử lý chọn hình ảnh
-                openFileDialog.Filter = "Image Files (*.jpg, *.jpeg, *.png)|*.jpg; *.jpeg; *.png";
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    string imagePath = openFileDialog.FileName;
-                    pictureBox.Image = Image.FromFile(imagePath);
-                }
+                string imagePath = openFileDialog.FileName;
+                pictureBox.Image = Image.FromFile(imagePath);
             }
         }
 
@@ -138,7 +127,7 @@ namespace restaurant
 
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(description) || pictureBox.Image == null || string.IsNullOrEmpty(price) || string.IsNullOrEmpty(priceSale) || string.IsNullOrEmpty(status) || string.IsNullOrEmpty(size) || string.IsNullOrEmpty(color) || string.IsNullOrEmpty(quantity))
             {
-                CustomMessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Vui lòng nhập đầy đủ thông tin!", ToolTipIcon.Warning);
             }
             else
             {
@@ -157,13 +146,13 @@ namespace restaurant
                     if (response)
                     {
                         this.GetListProduct();
-                        CustomMessageBox.Show("Sửa sản phẩm thành công");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật sản phẩm thành công", ToolTipIcon.Info);
                         this.Close();
                     }
                     else
                     {
                         this.GetListProduct();
-                        CustomMessageBox.Show("Sửa sản phẩm thất bại");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật sản phẩm thất bại", ToolTipIcon.Error);
                         this.Close();
                     }
                 }
@@ -174,13 +163,13 @@ namespace restaurant
                     if (response)
                     {
                         this.GetListProduct();
-                        CustomMessageBox.Show("Thêm danh mục thành công");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm danh mục thành công", ToolTipIcon.Info);
                         this.Close();
                     }
                     else
                     {
                         this.GetListProduct();
-                        CustomMessageBox.Show("Thêm danh mục thất bại");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm danh mục thất bại", ToolTipIcon.Error);
                         this.Close();
                     }
                 }
@@ -193,13 +182,13 @@ namespace restaurant
             if (response)
             {
                 this.GetListProduct();
-                CustomMessageBox.Show("Xoá sản phẩm thành công");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Xoá sản phẩm thành công", ToolTipIcon.Info);
                 this.Close();
             }
             else
             {
                 this.GetListProduct();
-                CustomMessageBox.Show("Xoá sản phẩm thất bại");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Xoá sản phẩm thất bại", ToolTipIcon.Error);
                 this.Close();
             }
         }

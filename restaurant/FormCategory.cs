@@ -136,7 +136,7 @@ namespace restaurant
             // Kiểm tra nếu có bất kỳ thông báo lỗi nào từ ErrorProvider
             if (errorProvider.GetError(txtCategoryName) != "" || errorProvider.GetError(txtCategoryDescription) != "" || errorProvider.GetError(btnChooseImage) != "")
             {
-                CustomMessageBox.Show("Vui lòng điền đầy đủ thông tin!");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Vui lòng điền đầy đủ thông tin", ToolTipIcon.Warning);
                 return; // Dừng lại nếu dữ liệu không hợp lệ
             }
             else
@@ -156,13 +156,13 @@ namespace restaurant
                     if (response)
                     {
                         this.getListCategory();
-                        CustomMessageBox.Show("Sửa danh mục thành công");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật danh mục thành công", ToolTipIcon.Info);
                         this.Close();
                     }
                     else
                     {
                         this.getListCategory();
-                        CustomMessageBox.Show("Sửa danh mục thất bại");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật danh mục thất bại", ToolTipIcon.Error);
                         this.Close();
                     }
                 }
@@ -173,13 +173,13 @@ namespace restaurant
                     if (response)
                     {
                         this.getListCategory();
-                        CustomMessageBox.Show("Thêm danh mục thành công");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm danh mục thành công", ToolTipIcon.Info);
                         this.Close();
                     }
                     else
                     {
                         this.getListCategory();
-                        CustomMessageBox.Show("Thêm danh mục thất bại");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm danh mục thất bại", ToolTipIcon.Error);
                         this.Close();
                     }
                 }
@@ -192,12 +192,12 @@ namespace restaurant
             if(response)
             {
                 this.getListCategory();
-                CustomMessageBox.Show("Xoá danh mục thành công");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Xoá danh mục thành công", ToolTipIcon.Info);
                 this.Close();
             } else
             {
                 this.getListCategory();
-                CustomMessageBox.Show("Xoá danh mục thất bại");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Xoá danh mục thất bại", ToolTipIcon.Error);
                 this.Close();
             }
         }

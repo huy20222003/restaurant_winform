@@ -53,7 +53,7 @@ namespace restaurant
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", ex.Message, ToolTipIcon.Error);
             }
         }
 
@@ -65,21 +65,28 @@ namespace restaurant
                 string password = txtPassword.Text.Trim();
 
                 // Thực hiện kiểm tra thông tin đăng nhập ở đây
-                if (CheckCredentials(username, password))
+                if(!string.IsNullOrEmpty(username) || !string.IsNullOrEmpty(password))
                 {
-                    // Nếu thông tin đăng nhập đúng, mở form Main
-                    Main mainForm = new Main(username);
-                    mainForm.Show();
-                    this.Hide(); // Ẩn form đăng nhập
-                }
-                else
+                    if (CheckCredentials(username, password))
+                    {
+                        // Nếu thông tin đăng nhập đúng, mở form Main
+                        Main mainForm = new Main(username);
+                        mainForm.Show();
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Đăng nhập thành công", ToolTipIcon.Info);
+                        this.Hide(); // Ẩn form đăng nhập
+                    }
+                    else
+                    {
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Tên đăng nhập hoặc mật khẩu không đúng.", ToolTipIcon.Warning);
+                    }
+                } else
                 {
-                    CustomMessageBox.Show("Tên đăng nhập hoặc mật khẩu không đúng.");
+                    notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Vui lóng điền đầy đủ thông tin.", ToolTipIcon.Warning);
                 }
             }
             catch (Exception ex)
             {
-                CustomMessageBox.Show("Đã có lỗi xảy ra: " + ex.Message);
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Đã có lỗi xảy ra: " + ex.Message, ToolTipIcon.Error);
             }
 
         }
@@ -90,6 +97,14 @@ namespace restaurant
         }
 
         private void txtPassword_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                button_login_Click(sender, e);
+            }
+        }
+
+        private void txtUsername_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {

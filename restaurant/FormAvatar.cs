@@ -67,12 +67,12 @@ namespace restaurant
                 bool response = EmployeeDAO.Instance.UpdateEmployeeAvatar(this.ID, imageUrl);
                 if (response)
                 {
-                    CustomMessageBox.Show("Cập nhật avatar thành công");
+                    notifyIcon.ShowBalloonTip(5000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật avatar thành công", ToolTipIcon.Info);
                     this.Close();
                 }
                 else
                 {
-                    CustomMessageBox.Show("Cập nhật avatar thất bại");
+                    notifyIcon.ShowBalloonTip(5000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật avatar thất bại", ToolTipIcon.Error);
                     this.Close();
                 }
             }

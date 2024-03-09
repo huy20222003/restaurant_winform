@@ -38,6 +38,14 @@ namespace restaurant.DAO
             return null;
         }
 
+        public DataTable GetRoleByIdOrName(string searchValue)
+        {
+            string query = string.Format("SELECT * FROM Role WHERE name LIKE N'%{0}%' OR id LIKE '{1}'", searchValue, searchValue);
+            DataTable data = DataProvider.Instance.ExecuteQuery(query);
+
+            return data;
+        }
+
         public bool InsertRole(string name, string description)
         {
             string query = string.Format("INSERT INTO Role (Name, Description) VALUES (N'{0}', N'{1}')", name, description);

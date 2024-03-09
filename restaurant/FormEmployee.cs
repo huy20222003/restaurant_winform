@@ -138,7 +138,7 @@ namespace restaurant
 
             if (string.IsNullOrEmpty(fullName) || string.IsNullOrEmpty(username) || pictureBox.Image == null || string.IsNullOrEmpty(address) || string.IsNullOrEmpty(age) || string.IsNullOrEmpty(gender) || string.IsNullOrEmpty(phoneNumber))
             {
-                CustomMessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Vui lòng nhập đầy đủ thông tin", ToolTipIcon.Warning);
             }
             else
             {
@@ -157,13 +157,13 @@ namespace restaurant
                     if (response)
                     {
                         this.getListEmployee();
-                        CustomMessageBox.Show("Sửa nhân viên thành công");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật thông tin nhân viên thành công", ToolTipIcon.Info);
                         this.Close();
                     }
                     else
                     {
                         this.getListEmployee();
-                        CustomMessageBox.Show("Sửa nhân viên thất bại");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật thông tin nhân viên thất bại", ToolTipIcon.Error);
                         this.Close();
                     }
                 }
@@ -176,13 +176,13 @@ namespace restaurant
                     if (response)
                     {
                         this.getListEmployee();
-                        CustomMessageBox.Show("Thêm nhân viên thành công. Mật khẩu của bạn là 123");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm nhân viên thành công. Mật khẩu là 123", ToolTipIcon.Info);
                         this.Close();
                     }
                     else
                     {
                         this.getListEmployee();
-                        CustomMessageBox.Show("Thêm nhân viên thất bại");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm nhân viên thất bại", ToolTipIcon.Error);
                         this.Close();
                     }
                 }
@@ -195,13 +195,13 @@ namespace restaurant
             if (response)
             {
                 this.getListEmployee();
-                CustomMessageBox.Show("Xoá nhân viên thành công");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Xoá nhân viên thành công", ToolTipIcon.Info);
                 this.Close();
             }
             else
             {
                 this.getListEmployee();
-                CustomMessageBox.Show("Xoá nhân viên thất bại");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Xoá nhân viên thất bại", ToolTipIcon.Error);
                 this.Close();
             }
         }

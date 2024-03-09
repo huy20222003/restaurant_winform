@@ -32,7 +32,6 @@ namespace restaurant
                 Accent.LightBlue200,
                 TextShade.WHITE
             );
-            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         public FormRole(string id, string name, string description, bool isEdit)
@@ -48,7 +47,6 @@ namespace restaurant
                 Accent.LightBlue200,
                 TextShade.WHITE
             );
-            this.StartPosition = FormStartPosition.CenterScreen;
             this.ID = int.Parse(id);
             this.isEdit = isEdit;
             if (isEdit)
@@ -72,12 +70,13 @@ namespace restaurant
 
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(description))
             {
-                CustomMessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Vui lòng điền đầy đủ thông tin", ToolTipIcon.Warning);
             }
             else
             {
                 if (isEdit)
                 {
+                    CustomMessageBox.Show(this.isEdit.ToString());
                     buttonRoleDelete.Visible = true;
                     DateTime updatedAt = DateTime.Now; // Đây là đối tượng DateTime cần chuyển đổi
                     string formattedDate = updatedAt.ToString("yyyy-MM-dd HH:mm:ss.fffffff");
@@ -87,13 +86,13 @@ namespace restaurant
                     if (response)
                     {
                         this.getListRole();
-                        CustomMessageBox.Show("Sửa quyền thành công");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật quyền thành công", ToolTipIcon.Info);
                         this.Close();
                     }
                     else
                     {
                         this.getListRole();
-                        CustomMessageBox.Show("Sửa quyền thất bại");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật quyền thất bại", ToolTipIcon.Error);
                         this.Close();
                     }
                 }
@@ -104,13 +103,13 @@ namespace restaurant
                     if (response)
                     {
                         this.getListRole();
-                        CustomMessageBox.Show("Thêm quyền thành công");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm quyền thành công", ToolTipIcon.Info);
                         this.Close();
                     }
                     else
                     {
                         this.getListRole();
-                        CustomMessageBox.Show("Thêm quyền thất bại");
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm quyền thất bại", ToolTipIcon.Error);
                         this.Close();
                     }
                 }
@@ -123,13 +122,13 @@ namespace restaurant
             if (response)
             {
                 this.getListRole();
-                CustomMessageBox.Show("Xoá quyền thành công");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Xoá quyền thành công", ToolTipIcon.Info);
                 this.Close();
             }
             else
             {
                 this.getListRole();
-                CustomMessageBox.Show("Xoá quyền thất bại");
+                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Xoá thất bại thành công", ToolTipIcon.Error);
                 this.Close();
             }
         }
@@ -170,7 +169,5 @@ namespace restaurant
         {
             errorProvider.SetError((sender as Control), ""); // Xóa thông báo lỗi
         }
-
-
     }
 }

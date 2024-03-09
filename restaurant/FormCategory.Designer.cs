@@ -33,14 +33,15 @@
             this.materialCard1 = new MaterialSkin.Controls.MaterialCard();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.btnChooseImage = new MaterialSkin.Controls.MaterialButton();
-            this.txtCategoryName = new MaterialSkin.Controls.MaterialTextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.buttonCancel = new MaterialSkin.Controls.MaterialButton();
             this.buttonAddCategory = new MaterialSkin.Controls.MaterialButton();
-            this.txtCategoryDescription = new MaterialSkin.Controls.MaterialMultiLineTextBox2();
             this.buttonCategoryDelete = new MaterialSkin.Controls.MaterialButton();
             this.labelCategoryTitle = new MaterialSkin.Controls.MaterialLabel();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.txtCategoryName = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtCategoryDescription = new Guna.UI2.WinForms.Guna2TextBox();
             this.materialCard1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -91,24 +92,6 @@
             this.btnChooseImage.UseVisualStyleBackColor = true;
             this.btnChooseImage.Click += new System.EventHandler(this.btnChooseImage_Click);
             // 
-            // txtCategoryName
-            // 
-            this.txtCategoryName.AnimateReadOnly = false;
-            this.txtCategoryName.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtCategoryName.Depth = 0;
-            this.txtCategoryName.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtCategoryName.Hint = "Nhập tên danh mục";
-            this.txtCategoryName.LeadingIcon = null;
-            this.txtCategoryName.Location = new System.Drawing.Point(287, 121);
-            this.txtCategoryName.MaxLength = 10;
-            this.txtCategoryName.MouseState = MaterialSkin.MouseState.OUT;
-            this.txtCategoryName.Multiline = false;
-            this.txtCategoryName.Name = "txtCategoryName";
-            this.txtCategoryName.Size = new System.Drawing.Size(472, 50);
-            this.txtCategoryName.TabIndex = 6;
-            this.txtCategoryName.Text = "";
-            this.txtCategoryName.TrailingIcon = null;
-            // 
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog";
@@ -155,32 +138,6 @@
             this.buttonAddCategory.UseVisualStyleBackColor = true;
             this.buttonAddCategory.Click += new System.EventHandler(this.buttonAddCategory_Click);
             // 
-            // txtCategoryDescription
-            // 
-            this.txtCategoryDescription.AnimateReadOnly = false;
-            this.txtCategoryDescription.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.txtCategoryDescription.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtCategoryDescription.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtCategoryDescription.Depth = 0;
-            this.txtCategoryDescription.HideSelection = true;
-            this.txtCategoryDescription.Hint = "Nhập vào mô tả của danh mục";
-            this.txtCategoryDescription.Location = new System.Drawing.Point(287, 194);
-            this.txtCategoryDescription.MaxLength = 2000;
-            this.txtCategoryDescription.MouseState = MaterialSkin.MouseState.OUT;
-            this.txtCategoryDescription.Name = "txtCategoryDescription";
-            this.txtCategoryDescription.PasswordChar = '\0';
-            this.txtCategoryDescription.ReadOnly = false;
-            this.txtCategoryDescription.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtCategoryDescription.SelectedText = "";
-            this.txtCategoryDescription.SelectionLength = 0;
-            this.txtCategoryDescription.SelectionStart = 0;
-            this.txtCategoryDescription.ShortcutsEnabled = true;
-            this.txtCategoryDescription.Size = new System.Drawing.Size(472, 187);
-            this.txtCategoryDescription.TabIndex = 10;
-            this.txtCategoryDescription.TabStop = false;
-            this.txtCategoryDescription.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtCategoryDescription.UseSystemPasswordChar = false;
-            // 
             // buttonCategoryDelete
             // 
             this.buttonCategoryDelete.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -225,17 +182,69 @@
             this.errorProvider.ContainerControl = this;
             this.errorProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("errorProvider.Icon")));
             // 
+            // notifyIcon
+            // 
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "notifyIcon1";
+            this.notifyIcon.Visible = true;
+            // 
+            // txtCategoryName
+            // 
+            this.txtCategoryName.Animated = true;
+            this.txtCategoryName.BorderRadius = 4;
+            this.txtCategoryName.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtCategoryName.DefaultText = "";
+            this.txtCategoryName.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtCategoryName.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtCategoryName.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtCategoryName.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtCategoryName.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtCategoryName.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txtCategoryName.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtCategoryName.IconLeft = ((System.Drawing.Image)(resources.GetObject("txtCategoryName.IconLeft")));
+            this.txtCategoryName.Location = new System.Drawing.Point(287, 121);
+            this.txtCategoryName.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txtCategoryName.Name = "txtCategoryName";
+            this.txtCategoryName.PasswordChar = '\0';
+            this.txtCategoryName.PlaceholderText = "Tên danh mục";
+            this.txtCategoryName.SelectedText = "";
+            this.txtCategoryName.Size = new System.Drawing.Size(511, 60);
+            this.txtCategoryName.TabIndex = 13;
+            // 
+            // txtCategoryDescription
+            // 
+            this.txtCategoryDescription.Animated = true;
+            this.txtCategoryDescription.BorderRadius = 4;
+            this.txtCategoryDescription.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtCategoryDescription.DefaultText = "";
+            this.txtCategoryDescription.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtCategoryDescription.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtCategoryDescription.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtCategoryDescription.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtCategoryDescription.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtCategoryDescription.Font = new System.Drawing.Font("Segoe UI", 13.8F);
+            this.txtCategoryDescription.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtCategoryDescription.Location = new System.Drawing.Point(287, 193);
+            this.txtCategoryDescription.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.txtCategoryDescription.Multiline = true;
+            this.txtCategoryDescription.Name = "txtCategoryDescription";
+            this.txtCategoryDescription.PasswordChar = '\0';
+            this.txtCategoryDescription.PlaceholderText = "Mô tả";
+            this.txtCategoryDescription.SelectedText = "";
+            this.txtCategoryDescription.Size = new System.Drawing.Size(511, 188);
+            this.txtCategoryDescription.TabIndex = 14;
+            // 
             // FormCategory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(900, 600);
+            this.Controls.Add(this.txtCategoryDescription);
+            this.Controls.Add(this.txtCategoryName);
             this.Controls.Add(this.labelCategoryTitle);
             this.Controls.Add(this.buttonCategoryDelete);
-            this.Controls.Add(this.txtCategoryDescription);
             this.Controls.Add(this.buttonAddCategory);
             this.Controls.Add(this.buttonCancel);
-            this.Controls.Add(this.txtCategoryName);
             this.Controls.Add(this.btnChooseImage);
             this.Controls.Add(this.materialCard1);
             this.FormStyle = MaterialSkin.Controls.MaterialForm.FormStyles.ActionBar_None;
@@ -258,13 +267,14 @@
         private MaterialSkin.Controls.MaterialCard materialCard1;
         private System.Windows.Forms.PictureBox pictureBox;
         private MaterialSkin.Controls.MaterialButton btnChooseImage;
-        private MaterialSkin.Controls.MaterialTextBox txtCategoryName;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private MaterialSkin.Controls.MaterialButton buttonCancel;
         private MaterialSkin.Controls.MaterialButton buttonAddCategory;
-        private MaterialSkin.Controls.MaterialMultiLineTextBox2 txtCategoryDescription;
         private MaterialSkin.Controls.MaterialButton buttonCategoryDelete;
         private MaterialSkin.Controls.MaterialLabel labelCategoryTitle;
         private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
+        private Guna.UI2.WinForms.Guna2TextBox txtCategoryDescription;
+        private Guna.UI2.WinForms.Guna2TextBox txtCategoryName;
     }
 }
