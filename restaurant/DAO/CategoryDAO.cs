@@ -23,6 +23,21 @@ namespace restaurant.DAO
             return DataProvider.Instance.ExecuteQuery("SELECT * FROM Category");
         }
 
+        public int GetTotalCategories()
+        {
+            int totalCategories = 0;
+            try
+            {
+                string query = "SELECT COUNT(*) FROM Category";
+                totalCategories = (int)DataProvider.Instance.ExecuteScalar(query);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting total categories: " + ex.Message);
+            }
+            return totalCategories;
+        }
+
         public Category GetCategoryById(int categoryId)
         {
             DataTable data = DataProvider.Instance.ExecuteQuery("SELECT * FROM Category WHERE ID = " + categoryId);
@@ -35,9 +50,9 @@ namespace restaurant.DAO
             return null;
         }
 
-        public DataTable SearchCategoryByName(string searchValue)
+        public DataTable SearchCategoryByNameOrId(string searchValue)
         {
-            string query = "SELECT * FROM Category WHERE Name = " + searchValue;
+            string query = string.Format("SELECT * FROM Category WHERE name LIKE N'%{0}%' OR id LIKE '{1}'", searchValue, searchValue);
             DataTable data = DataProvider.Instance.ExecuteQuery(query);
 
 

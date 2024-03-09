@@ -50,7 +50,6 @@ namespace restaurant.DAO
         {
             string query = string.Format("INSERT INTO Product (Name, Description, ImageUrl, Status, CategoryId, Size, Color, Quantity, Price, PriceSale) VALUES (N'{0}', N'{1}', N'{2}', N'{3}', {4}, N'{5}', N'{6}', {7}, {8}, {9})", name, description, imageUrl, status, categoryId, size, color, quantity, price, priceSale);
             int result = DataProvider.Instance.ExecuteNonQuery(query);
-
             return result > 0;
         }
 

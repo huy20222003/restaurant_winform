@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
@@ -7,20 +6,34 @@ using Guna.UI2.WinForms;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using restaurant.DAO;
+using restaurant.DTO;
 
 namespace restaurant
 {
     public partial class FormAddProductToBill : MaterialForm
     {
         private FlowLayoutPanel flowLayoutPanel;
-        public FormAddProductToBill()
+        private int billID;
+        private int quantityValue;
+        private string selectedSize;
+        private string selectedColor;
+        private Guna2CircleButton buttonAddProduct;
+
+        public Action showProduct;
+
+        public FormAddProductToBill(int billId)
         {
             InitializeComponent();
-            // Khởi tạo MaterialSkinManager để thiết lập giao diện
+            InitializeMaterialSkinManager();
+            billID = billId;
+            DisplayProductList();
+        }
+
+        private void InitializeMaterialSkinManager()
+        {
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            // Thiết lập màu sắc chính và phụ
             materialSkinManager.ColorScheme = new ColorScheme(
                 Primary.Blue800,
                 Primary.Blue900,
@@ -28,99 +41,90 @@ namespace restaurant
                 Accent.LightBlue200,
                 TextShade.WHITE
             );
-            buttonSearch.Click += buttonSearch_Click;
         }
 
-        // Xử lý sự kiện khi form được tải
         private void FormAddProductToBill_Load(object sender, EventArgs e)
         {
-            // Gọi hàm hiển thị danh sách sản phẩm khi form được tải
             DisplayProductList();
         }
 
-        // Hàm để hiển thị danh sách sản phẩm
         private void DisplayProductList()
         {
-            // Lấy giá trị tìm kiếm từ textbox
             string searchValue = txtProductSearchValue.Text;
             DataTable productList;
-            // Tạo FlowLayoutPanel để chứa các sản phẩm
-            flowLayoutPanel = new FlowLayoutPanel();
-            flowLayoutPanel.Dock = DockStyle.Fill;
-            flowLayoutPanel.WrapContents = true;
-            flowLayoutPanel.AutoScroll = true;
+            flowLayoutPanel = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                WrapContents = true,
+                AutoScroll = true
+            };
 
-            // Hiển thị hiệu ứng loader
-            progressIndicatorProduct.Visible = true;
-
-            // Kiểm tra xem người dùng đã nhập từ khóa tìm kiếm chưa
             if (string.IsNullOrEmpty(searchValue))
-            {
-                // Nếu chưa, lấy danh sách tất cả sản phẩm
-                ClearCardItem();
                 productList = ProductDAO.Instance.GetListProduct();
-            }
             else
-            {
-                // Nếu đã nhập, lấy danh sách sản phẩm theo từ khóa tìm kiếm
-                ClearCardItem();
                 productList = ProductDAO.Instance.GetProductByName(searchValue);
-            }
 
-            // Duyệt qua từng sản phẩm trong danh sách
             foreach (DataRow row in productList.Rows)
             {
-                // Tạo một Panel để chứa thông tin sản phẩm
-                Panel panelProductItem = new Panel();
-                panelProductItem.Width = 1100;
-                panelProductItem.Height = 80;
-                panelProductItem.Padding = new Padding(10);
-                panelProductItem.Margin = new Padding(10);
+                Panel panelProductItem = new Panel
+                {
+                    Width = 1100,
+                    Height = 80,
+                    Padding = new Padding(10),
+                    Margin = new Padding(10)
+                };
 
-                // Tạo PictureBox để hiển thị hình ảnh sản phẩm
-                PictureBox pictureBox = new PictureBox();
-                pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                pictureBox.ImageLocation = row["ImageUrl"].ToString();
-                pictureBox.Location = new System.Drawing.Point(10, 10);
-                pictureBox.Width = 80;
-                pictureBox.Height = 80;
-                pictureBox.InitialImage = Properties.Resources.logo_ver_2;
+                PictureBox pictureBox = new PictureBox
+                {
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    ImageLocation = row["ImageUrl"].ToString(),
+                    Location = new Point(10, 10),
+                    Width = 80,
+                    Height = 80,
+                    InitialImage = Properties.Resources.logo_ver_2
+                };
 
-                // Tạo các label để hiển thị thông tin sản phẩm
-                MaterialLabel labelNameValue = new MaterialLabel()
+                MaterialLabel labelNameValue = new MaterialLabel
                 {
                     Text = row["Name"].ToString(),
                     AutoSize = true,
                     FontType = MaterialSkinManager.fontType.Body1,
-                    Location = new System.Drawing.Point(100, 14)
+                    Location = new Point(100, 14)
                 };
 
-                MaterialLabel labelPriceValue = new MaterialLabel()
+                MaterialLabel labelPriceValue = new MaterialLabel
                 {
-                    Text = "Giá tiền: " + row["Price"].ToString() + "VND",
+                    Text = "Giá tiền: " + row["Price"] + "VND",
                     AutoSize = true,
                     FontType = MaterialSkinManager.fontType.Body1,
-                    Location = new System.Drawing.Point(100, 55)
+                    Location = new Point(100, 55)
                 };
 
-                // Tạo nút để thêm sản phẩm vào hóa đơn
-                Guna2CircleButton buttonAddProduct = new Guna2CircleButton();
-                buttonAddProduct.Size = new Size(50, 50);
-                buttonAddProduct.Animated = true;
-                buttonAddProduct.Image = Properties.Resources.icon_add;
-                buttonAddProduct.Location = new System.Drawing.Point(1000, 8);
-                buttonAddProduct.Cursor = Cursors.Hand;
-                buttonAddProduct.Tag = row; // Đặt Tag cho nút để lưu thông tin sản phẩm
+                buttonAddProduct = new Guna2CircleButton
+                {
+                    Size = new Size(50, 50),
+                    Animated = true,
+                    Image = Properties.Resources.icon_add,
+                    Location = new Point(1000, 8),
+                    Cursor = Cursors.Hand,
+                    Tag = row // Lưu thông tin sản phẩm vào Tag
+                };
 
-                // Thêm sự kiện khi nút thêm sản phẩm được nhấn
                 buttonAddProduct.Click += ButtonAddProduct_Click;
 
-                // Tạo control cho số lượng sản phẩm và các thuộc tính khác
-                Guna2NumericUpDown quantity = new Guna2NumericUpDown() { Location = new Point(400, 14) };
-                Guna2ComboBox chooseSize = new Guna2ComboBox() { Location = new Point(600, 14) };
-                Guna2ComboBox chooseColor = new Guna2ComboBox() { Location = new Point(800, 14) };
+                Guna2NumericUpDown quantity = new Guna2NumericUpDown { Location = new Point(400, 14) };
+                quantity.ValueChanged += (s, e) => { quantityValue = (int)quantity.Value; };
 
-                // Thêm các control vào panel sản phẩm
+                Guna2ComboBox chooseSize = new Guna2ComboBox { Location = new Point(600, 14) };
+                string[] sizeArr = row["Size"].ToString().Split(',');
+                chooseSize.Items.AddRange(sizeArr);
+                chooseSize.SelectedIndexChanged += (s, e) => { selectedSize = chooseSize.SelectedItem.ToString(); };
+
+                Guna2ComboBox chooseColor = new Guna2ComboBox { Location = new Point(800, 14) };
+                string[] colorArr = row["Color"].ToString().Split(',');
+                chooseColor.Items.AddRange(colorArr);
+                chooseColor.SelectedIndexChanged += (s, e) => { selectedColor = chooseColor.SelectedItem.ToString(); };
+
                 panelProductItem.Controls.Add(pictureBox);
                 panelProductItem.Controls.Add(labelNameValue);
                 panelProductItem.Controls.Add(labelPriceValue);
@@ -129,56 +133,63 @@ namespace restaurant
                 panelProductItem.Controls.Add(chooseSize);
                 panelProductItem.Controls.Add(chooseColor);
 
-                // Thêm panel sản phẩm vào FlowLayoutPanel
                 flowLayoutPanel.Controls.Add(panelProductItem);
             }
 
-            // Ẩn hiệu ứng loader khi đã tạo xong các sản phẩm
-            progressIndicatorProduct.Visible = false;
-
-            // Thêm FlowLayoutPanel vào form
+            cardFormAddProduct.Controls.Clear();
             cardFormAddProduct.Controls.Add(flowLayoutPanel);
         }
 
-        // Xử lý sự kiện khi nút thêm sản phẩm được nhấn
         private void ButtonAddProduct_Click(object sender, EventArgs e)
         {
-            // Lấy thông tin sản phẩm từ Tag của nút
-            DataRow productInfo = ((sender as Guna2CircleButton).Tag as DataRow);
-            // Thêm logic xử lý khi nhấn nút thêm sản phẩm vào hóa đơn
-            // ...
-        }
+            DataRow productInfo = ((sender as Guna2CircleButton)?.Tag as DataRow);
 
-        // Xử lý sự kiện khi textbox tìm kiếm được nhấn
-        private void buttonSearch_Click(object sender, EventArgs e)
-        {
-            // Hiển thị danh sách sản phẩm khi người dùng nhấn vào textbox tìm kiếm
-            DisplayProductList();
-        }
-
-        private void ClearCardItem()
-        {
-            if (flowLayoutPanel != null)
+            if (productInfo != null)
             {
-                // Tạo một danh sách tạm thời để lưu trữ các control cần loại bỏ
-                List<Control> controlsToRemove = new List<Control>();
-
-                // Duyệt qua tất cả các cardEmployeeItem và thêm chúng vào danh sách controlsToRemove
-                foreach (Control control in flowLayoutPanel.Controls)
+                if (quantityValue > 0 && !string.IsNullOrEmpty(selectedSize) || !string.IsNullOrEmpty(selectedColor))
                 {
-                    if ( control is Panel)
+                    BillDetail billDetailExits = BillDetailDAO.Instance.GetBillDetailIfExists(billID, int.Parse(productInfo["id"].ToString()));
+                    if (billDetailExits != null)
                     {
-                        controlsToRemove.Add(control);
+                        bool updateResponse = BillDetailDAO.Instance.UpdateBillDetail(billID, Convert.ToInt32(productInfo["id"]), quantityValue, selectedSize, selectedColor);
+
+                        if (updateResponse)
+                        {
+                            notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm sản phẩm vào hóa đơn thành công.", ToolTipIcon.Info);
+                        }
+                        else
+                        {
+                            notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm sản phẩm vào hóa đơn không thành công. Vui lòng thử lại sau.", ToolTipIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        if (billDetailExits != null)
+                        {
+                            bool insertResponse = BillDetailDAO.Instance.InsertBillDetail(billID, Convert.ToInt32(productInfo["id"]), quantityValue, selectedSize, selectedColor);
+
+                            if (insertResponse)
+                            {
+                                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm sản phẩm vào hóa đơn thành công.", ToolTipIcon.Info);
+                            }
+                            else
+                            {
+                                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm sản phẩm vào hóa đơn không thành công. Vui lòng thử lại sau.", ToolTipIcon.Error);
+                            }
+                        }
                     }
                 }
-
-                // Loại bỏ các control được lưu trữ trong danh sách controlsToRemove
-                foreach (Control controlToRemove in controlsToRemove)
+                else
                 {
-                    flowLayoutPanel.Controls.Remove(controlToRemove);
-                    controlToRemove.Dispose(); // Giải phóng tài nguyên 
+                    notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Vui lòng chọn thuộc tính cho sản phẩm.", ToolTipIcon.Warning);
                 }
+
             }
+        }
+
+        private void txtProductSearchValue_TextChanged(object sender, EventArgs e)
+        {
+            DisplayProductList();
         }
     }
 }

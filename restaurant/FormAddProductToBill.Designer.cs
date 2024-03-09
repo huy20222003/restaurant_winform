@@ -35,9 +35,9 @@
             this.guna2ShadowForm1 = new Guna.UI2.WinForms.Guna2ShadowForm(this.components);
             this.progressIndicatorProduct = new Guna.UI2.WinForms.Guna2ProgressIndicator();
             this.cardFormAddProduct = new MaterialSkin.Controls.MaterialCard();
-            this.buttonSearch = new System.Windows.Forms.PictureBox();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.toolTipbuttonAddProductToBill = new Sunny.UI.UIToolTip(this.components);
             this.cardFormAddProduct.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.buttonSearch)).BeginInit();
             this.SuspendLayout();
             // 
             // materialLabel1
@@ -58,7 +58,7 @@
             this.txtProductSearchValue.AnimateReadOnly = false;
             this.txtProductSearchValue.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtProductSearchValue.Depth = 0;
-            this.txtProductSearchValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtProductSearchValue.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtProductSearchValue.Hint = "Nhập tên sản phẩm";
             this.txtProductSearchValue.LeadingIcon = null;
             this.txtProductSearchValue.Location = new System.Drawing.Point(331, 105);
@@ -70,6 +70,7 @@
             this.txtProductSearchValue.TabIndex = 1;
             this.txtProductSearchValue.Text = "";
             this.txtProductSearchValue.TrailingIcon = null;
+            this.txtProductSearchValue.TextChanged += new System.EventHandler(this.txtProductSearchValue_TextChanged);
             // 
             // progressIndicatorProduct
             // 
@@ -93,24 +94,23 @@
             this.cardFormAddProduct.Size = new System.Drawing.Size(1619, 573);
             this.cardFormAddProduct.TabIndex = 5;
             // 
-            // buttonSearch
+            // notifyIcon
             // 
-            this.buttonSearch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
-            this.buttonSearch.Location = new System.Drawing.Point(1198, 105);
-            this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(69, 50);
-            this.buttonSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.buttonSearch.TabIndex = 6;
-            this.buttonSearch.TabStop = false;
-            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "notifyIcon1";
+            this.notifyIcon.Visible = true;
+            // 
+            // toolTipbuttonAddProductToBill
+            // 
+            this.toolTipbuttonAddProductToBill.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.toolTipbuttonAddProductToBill.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(239)))), ((int)(((byte)(239)))));
+            this.toolTipbuttonAddProductToBill.OwnerDraw = true;
             // 
             // FormAddProductToBill
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1700, 900);
-            this.Controls.Add(this.buttonSearch);
             this.Controls.Add(this.cardFormAddProduct);
             this.Controls.Add(this.txtProductSearchValue);
             this.Controls.Add(this.materialLabel1);
@@ -122,7 +122,6 @@
             this.Text = "FormAddProductToBill";
             this.Load += new System.EventHandler(this.FormAddProductToBill_Load);
             this.cardFormAddProduct.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.buttonSearch)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -135,6 +134,7 @@
         private Guna.UI2.WinForms.Guna2ShadowForm guna2ShadowForm1;
         private Guna.UI2.WinForms.Guna2ProgressIndicator progressIndicatorProduct;
         private MaterialSkin.Controls.MaterialCard cardFormAddProduct;
-        private System.Windows.Forms.PictureBox buttonSearch;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
+        private Sunny.UI.UIToolTip toolTipbuttonAddProductToBill;
     }
 }

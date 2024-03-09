@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAvatar));
             this.pictureBoxAvatar = new System.Windows.Forms.PictureBox();
             this.buttonChangeAvatar = new MaterialSkin.Controls.MaterialButton();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.buttonAvatarCancel = new MaterialSkin.Controls.MaterialButton();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAvatar)).BeginInit();
             this.SuspendLayout();
             // 
@@ -109,6 +111,12 @@
             this.buttonAvatarCancel.UseVisualStyleBackColor = true;
             this.buttonAvatarCancel.Click += new System.EventHandler(this.buttonAvatarCancel_Click);
             // 
+            // notifyIcon
+            // 
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "notifyIcon";
+            this.notifyIcon.Visible = true;
+            // 
             // FormAvatar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -136,5 +144,6 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
         private MaterialSkin.Controls.MaterialButton buttonAvatarCancel;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
     }
 }

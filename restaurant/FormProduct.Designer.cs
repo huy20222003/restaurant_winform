@@ -33,21 +33,24 @@
             this.labelProductTitle = new MaterialSkin.Controls.MaterialLabel();
             this.materialCard1 = new MaterialSkin.Controls.MaterialCard();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.txtProductName = new MaterialSkin.Controls.MaterialTextBox();
-            this.txtProductPrice = new MaterialSkin.Controls.MaterialTextBox();
-            this.txtProductPriceSale = new MaterialSkin.Controls.MaterialTextBox();
-            this.comboBoxProductStatus = new MaterialSkin.Controls.MaterialComboBox();
-            this.comboBoxProductCategoryID = new MaterialSkin.Controls.MaterialComboBox();
             this.buttonProductCancel = new MaterialSkin.Controls.MaterialButton();
             this.buttonProduct = new MaterialSkin.Controls.MaterialButton();
             this.buttonProductDelete = new MaterialSkin.Controls.MaterialButton();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.txtProductQuantity = new MaterialSkin.Controls.MaterialTextBox();
-            this.btnChooseImage = new MaterialSkin.Controls.MaterialButton();
-            this.txtProductDescription = new MaterialSkin.Controls.MaterialMultiLineTextBox2();
-            this.txtProductColor = new MaterialSkin.Controls.MaterialMultiLineTextBox2();
-            this.txtProductSize = new MaterialSkin.Controls.MaterialMultiLineTextBox2();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.txtProductName = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtProductDescription = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtProductPrice = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtProductPriceSale = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtProductQuantity = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtProductColor = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtProductSize = new Guna.UI2.WinForms.Guna2TextBox();
+            this.comboBoxProductStatus = new Guna.UI2.WinForms.Guna2ComboBox();
+            this.comboBoxProductCategoryID = new Guna.UI2.WinForms.Guna2ComboBox();
+            this.btnChooseImage = new MaterialSkin.Controls.MaterialButton();
+            this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.materialCard1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -89,119 +92,6 @@
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
-            // 
-            // txtProductName
-            // 
-            this.txtProductName.AnimateReadOnly = false;
-            this.txtProductName.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtProductName.Depth = 0;
-            this.txtProductName.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtProductName.Hint = "Tên sản phẩm";
-            this.txtProductName.LeadingIcon = null;
-            this.txtProductName.Location = new System.Drawing.Point(307, 123);
-            this.txtProductName.MaxLength = 50;
-            this.txtProductName.MouseState = MaterialSkin.MouseState.OUT;
-            this.txtProductName.Multiline = false;
-            this.txtProductName.Name = "txtProductName";
-            this.txtProductName.Size = new System.Drawing.Size(844, 50);
-            this.txtProductName.TabIndex = 2;
-            this.txtProductName.Text = "";
-            this.txtProductName.TrailingIcon = null;
-            this.txtProductName.Validating += new System.ComponentModel.CancelEventHandler(this.TxtProductName_Validating);
-            this.txtProductName.Validated += new System.EventHandler(this.TxtProductName_Validated);
-            // 
-            // txtProductPrice
-            // 
-            this.txtProductPrice.AnimateReadOnly = false;
-            this.txtProductPrice.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtProductPrice.Depth = 0;
-            this.txtProductPrice.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtProductPrice.Hint = "Giá";
-            this.txtProductPrice.LeadingIcon = null;
-            this.txtProductPrice.Location = new System.Drawing.Point(307, 402);
-            this.txtProductPrice.MaxLength = 50;
-            this.txtProductPrice.MouseState = MaterialSkin.MouseState.OUT;
-            this.txtProductPrice.Multiline = false;
-            this.txtProductPrice.Name = "txtProductPrice";
-            this.txtProductPrice.Size = new System.Drawing.Size(226, 50);
-            this.txtProductPrice.TabIndex = 5;
-            this.txtProductPrice.Text = "";
-            this.txtProductPrice.TrailingIcon = null;
-            this.txtProductPrice.Validating += new System.ComponentModel.CancelEventHandler(this.TxtProductPrice_Validating);
-            this.txtProductPrice.Validated += new System.EventHandler(this.TxtProductPrice_Validated);
-            // 
-            // txtProductPriceSale
-            // 
-            this.txtProductPriceSale.AnimateReadOnly = false;
-            this.txtProductPriceSale.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtProductPriceSale.Depth = 0;
-            this.txtProductPriceSale.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtProductPriceSale.Hint = "Giá khuyến mãi";
-            this.txtProductPriceSale.LeadingIcon = null;
-            this.txtProductPriceSale.Location = new System.Drawing.Point(587, 402);
-            this.txtProductPriceSale.MaxLength = 50;
-            this.txtProductPriceSale.MouseState = MaterialSkin.MouseState.OUT;
-            this.txtProductPriceSale.Multiline = false;
-            this.txtProductPriceSale.Name = "txtProductPriceSale";
-            this.txtProductPriceSale.Size = new System.Drawing.Size(249, 50);
-            this.txtProductPriceSale.TabIndex = 6;
-            this.txtProductPriceSale.Text = "";
-            this.txtProductPriceSale.TrailingIcon = null;
-            this.txtProductPriceSale.Validating += new System.ComponentModel.CancelEventHandler(this.TxtProductPriceSale_Validating);
-            this.txtProductPriceSale.Validated += new System.EventHandler(this.TxtProductPriceSale_Validated);
-            // 
-            // comboBoxProductStatus
-            // 
-            this.comboBoxProductStatus.AutoResize = false;
-            this.comboBoxProductStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.comboBoxProductStatus.Depth = 0;
-            this.comboBoxProductStatus.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.comboBoxProductStatus.DropDownHeight = 174;
-            this.comboBoxProductStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxProductStatus.DropDownWidth = 121;
-            this.comboBoxProductStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.comboBoxProductStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.comboBoxProductStatus.FormattingEnabled = true;
-            this.comboBoxProductStatus.Hint = "Trạng thái";
-            this.comboBoxProductStatus.IntegralHeight = false;
-            this.comboBoxProductStatus.ItemHeight = 43;
-            this.comboBoxProductStatus.Items.AddRange(new object[] {
-            "New",
-            "Sale"});
-            this.comboBoxProductStatus.Location = new System.Drawing.Point(307, 473);
-            this.comboBoxProductStatus.MaxDropDownItems = 4;
-            this.comboBoxProductStatus.MouseState = MaterialSkin.MouseState.OUT;
-            this.comboBoxProductStatus.Name = "comboBoxProductStatus";
-            this.comboBoxProductStatus.Size = new System.Drawing.Size(372, 49);
-            this.comboBoxProductStatus.StartIndex = 0;
-            this.comboBoxProductStatus.TabIndex = 7;
-            this.comboBoxProductStatus.Validating += new System.ComponentModel.CancelEventHandler(this.ComboBoxProductStatus_Validating);
-            this.comboBoxProductStatus.Validated += new System.EventHandler(this.ComboBoxProductStatus_Validated);
-            // 
-            // comboBoxProductCategoryID
-            // 
-            this.comboBoxProductCategoryID.AutoResize = false;
-            this.comboBoxProductCategoryID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.comboBoxProductCategoryID.Depth = 0;
-            this.comboBoxProductCategoryID.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.comboBoxProductCategoryID.DropDownHeight = 174;
-            this.comboBoxProductCategoryID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxProductCategoryID.DropDownWidth = 121;
-            this.comboBoxProductCategoryID.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.comboBoxProductCategoryID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.comboBoxProductCategoryID.FormattingEnabled = true;
-            this.comboBoxProductCategoryID.Hint = "Danh mục";
-            this.comboBoxProductCategoryID.IntegralHeight = false;
-            this.comboBoxProductCategoryID.ItemHeight = 43;
-            this.comboBoxProductCategoryID.Location = new System.Drawing.Point(708, 473);
-            this.comboBoxProductCategoryID.MaxDropDownItems = 4;
-            this.comboBoxProductCategoryID.MouseState = MaterialSkin.MouseState.OUT;
-            this.comboBoxProductCategoryID.Name = "comboBoxProductCategoryID";
-            this.comboBoxProductCategoryID.Size = new System.Drawing.Size(443, 49);
-            this.comboBoxProductCategoryID.StartIndex = 0;
-            this.comboBoxProductCategoryID.TabIndex = 8;
-            this.comboBoxProductCategoryID.Validating += new System.ComponentModel.CancelEventHandler(this.ComboBoxProductCategoryID_Validating);
-            this.comboBoxProductCategoryID.Validated += new System.EventHandler(this.ComboBoxProductCategoryID_Validated);
             // 
             // buttonProductCancel
             // 
@@ -271,25 +161,208 @@
             // 
             this.openFileDialog.FileName = "openFileDialog";
             // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
+            this.errorProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("errorProvider.Icon")));
+            // 
+            // notifyIcon
+            // 
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "notifyIcon1";
+            this.notifyIcon.Visible = true;
+            // 
+            // txtProductName
+            // 
+            this.txtProductName.Animated = true;
+            this.txtProductName.BorderRadius = 4;
+            this.txtProductName.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtProductName.DefaultText = "";
+            this.txtProductName.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtProductName.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtProductName.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtProductName.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtProductName.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtProductName.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtProductName.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtProductName.Location = new System.Drawing.Point(307, 114);
+            this.txtProductName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtProductName.Name = "txtProductName";
+            this.txtProductName.PasswordChar = '\0';
+            this.txtProductName.PlaceholderText = "Tên sản phẩm";
+            this.txtProductName.SelectedText = "";
+            this.txtProductName.Size = new System.Drawing.Size(844, 60);
+            this.txtProductName.TabIndex = 19;
+            // 
+            // txtProductDescription
+            // 
+            this.txtProductDescription.Animated = true;
+            this.txtProductDescription.BorderRadius = 4;
+            this.txtProductDescription.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtProductDescription.DefaultText = "";
+            this.txtProductDescription.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtProductDescription.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtProductDescription.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtProductDescription.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtProductDescription.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtProductDescription.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtProductDescription.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtProductDescription.Location = new System.Drawing.Point(307, 188);
+            this.txtProductDescription.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtProductDescription.Multiline = true;
+            this.txtProductDescription.Name = "txtProductDescription";
+            this.txtProductDescription.PasswordChar = '\0';
+            this.txtProductDescription.PlaceholderText = "Mô tả";
+            this.txtProductDescription.SelectedText = "";
+            this.txtProductDescription.Size = new System.Drawing.Size(844, 183);
+            this.txtProductDescription.TabIndex = 20;
+            // 
+            // txtProductPrice
+            // 
+            this.txtProductPrice.Animated = true;
+            this.txtProductPrice.BorderRadius = 4;
+            this.txtProductPrice.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtProductPrice.DefaultText = "";
+            this.txtProductPrice.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtProductPrice.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtProductPrice.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtProductPrice.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtProductPrice.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtProductPrice.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtProductPrice.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtProductPrice.Location = new System.Drawing.Point(307, 392);
+            this.txtProductPrice.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtProductPrice.Name = "txtProductPrice";
+            this.txtProductPrice.PasswordChar = '\0';
+            this.txtProductPrice.PlaceholderText = "Giá";
+            this.txtProductPrice.SelectedText = "";
+            this.txtProductPrice.Size = new System.Drawing.Size(257, 60);
+            this.txtProductPrice.TabIndex = 21;
+            // 
+            // txtProductPriceSale
+            // 
+            this.txtProductPriceSale.Animated = true;
+            this.txtProductPriceSale.BorderRadius = 4;
+            this.txtProductPriceSale.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtProductPriceSale.DefaultText = "";
+            this.txtProductPriceSale.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtProductPriceSale.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtProductPriceSale.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtProductPriceSale.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtProductPriceSale.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtProductPriceSale.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtProductPriceSale.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtProductPriceSale.Location = new System.Drawing.Point(602, 392);
+            this.txtProductPriceSale.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtProductPriceSale.Name = "txtProductPriceSale";
+            this.txtProductPriceSale.PasswordChar = '\0';
+            this.txtProductPriceSale.PlaceholderText = "Giá khuyến mãi";
+            this.txtProductPriceSale.SelectedText = "";
+            this.txtProductPriceSale.Size = new System.Drawing.Size(257, 60);
+            this.txtProductPriceSale.TabIndex = 22;
+            // 
             // txtProductQuantity
             // 
-            this.txtProductQuantity.AnimateReadOnly = false;
-            this.txtProductQuantity.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtProductQuantity.Depth = 0;
-            this.txtProductQuantity.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtProductQuantity.Hint = "Số lượng";
-            this.txtProductQuantity.LeadingIcon = null;
-            this.txtProductQuantity.Location = new System.Drawing.Point(918, 402);
-            this.txtProductQuantity.MaxLength = 50;
-            this.txtProductQuantity.MouseState = MaterialSkin.MouseState.OUT;
-            this.txtProductQuantity.Multiline = false;
+            this.txtProductQuantity.Animated = true;
+            this.txtProductQuantity.BorderRadius = 4;
+            this.txtProductQuantity.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtProductQuantity.DefaultText = "";
+            this.txtProductQuantity.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtProductQuantity.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtProductQuantity.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtProductQuantity.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtProductQuantity.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtProductQuantity.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtProductQuantity.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtProductQuantity.Location = new System.Drawing.Point(894, 392);
+            this.txtProductQuantity.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtProductQuantity.Name = "txtProductQuantity";
-            this.txtProductQuantity.Size = new System.Drawing.Size(233, 50);
-            this.txtProductQuantity.TabIndex = 14;
-            this.txtProductQuantity.Text = "";
-            this.txtProductQuantity.TrailingIcon = null;
-            this.txtProductQuantity.Validating += new System.ComponentModel.CancelEventHandler(this.TxtProductQuantity_Validating);
-            this.txtProductQuantity.Validated += new System.EventHandler(this.TxtProductQuantity_Validated);
+            this.txtProductQuantity.PasswordChar = '\0';
+            this.txtProductQuantity.PlaceholderText = "Số lượng";
+            this.txtProductQuantity.SelectedText = "";
+            this.txtProductQuantity.Size = new System.Drawing.Size(257, 60);
+            this.txtProductQuantity.TabIndex = 23;
+            // 
+            // txtProductColor
+            // 
+            this.txtProductColor.Animated = true;
+            this.txtProductColor.BorderRadius = 4;
+            this.txtProductColor.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtProductColor.DefaultText = "";
+            this.txtProductColor.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtProductColor.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtProductColor.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtProductColor.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtProductColor.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtProductColor.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtProductColor.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtProductColor.Location = new System.Drawing.Point(307, 544);
+            this.txtProductColor.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtProductColor.Multiline = true;
+            this.txtProductColor.Name = "txtProductColor";
+            this.txtProductColor.PasswordChar = '\0';
+            this.txtProductColor.PlaceholderText = "Màu sắc";
+            this.txtProductColor.SelectedText = "";
+            this.txtProductColor.Size = new System.Drawing.Size(372, 108);
+            this.txtProductColor.TabIndex = 24;
+            // 
+            // txtProductSize
+            // 
+            this.txtProductSize.Animated = true;
+            this.txtProductSize.BorderRadius = 4;
+            this.txtProductSize.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtProductSize.DefaultText = "";
+            this.txtProductSize.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtProductSize.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtProductSize.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtProductSize.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtProductSize.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtProductSize.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtProductSize.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtProductSize.Location = new System.Drawing.Point(759, 544);
+            this.txtProductSize.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtProductSize.Multiline = true;
+            this.txtProductSize.Name = "txtProductSize";
+            this.txtProductSize.PasswordChar = '\0';
+            this.txtProductSize.PlaceholderText = "Kích thước";
+            this.txtProductSize.SelectedText = "";
+            this.txtProductSize.Size = new System.Drawing.Size(392, 108);
+            this.txtProductSize.TabIndex = 25;
+            // 
+            // comboBoxProductStatus
+            // 
+            this.comboBoxProductStatus.BackColor = System.Drawing.Color.Transparent;
+            this.comboBoxProductStatus.BorderRadius = 4;
+            this.comboBoxProductStatus.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comboBoxProductStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProductStatus.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.comboBoxProductStatus.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.comboBoxProductStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.comboBoxProductStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
+            this.comboBoxProductStatus.ItemHeight = 30;
+            this.comboBoxProductStatus.Items.AddRange(new object[] {
+            "New",
+            "Sale"});
+            this.comboBoxProductStatus.Location = new System.Drawing.Point(307, 486);
+            this.comboBoxProductStatus.Name = "comboBoxProductStatus";
+            this.comboBoxProductStatus.Size = new System.Drawing.Size(372, 36);
+            this.comboBoxProductStatus.TabIndex = 26;
+            // 
+            // comboBoxProductCategoryID
+            // 
+            this.comboBoxProductCategoryID.BackColor = System.Drawing.Color.Transparent;
+            this.comboBoxProductCategoryID.BorderRadius = 4;
+            this.comboBoxProductCategoryID.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comboBoxProductCategoryID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProductCategoryID.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.comboBoxProductCategoryID.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.comboBoxProductCategoryID.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.comboBoxProductCategoryID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
+            this.comboBoxProductCategoryID.ItemHeight = 30;
+            this.comboBoxProductCategoryID.Location = new System.Drawing.Point(759, 486);
+            this.comboBoxProductCategoryID.Name = "comboBoxProductCategoryID";
+            this.comboBoxProductCategoryID.Size = new System.Drawing.Size(392, 36);
+            this.comboBoxProductCategoryID.TabIndex = 27;
             // 
             // btnChooseImage
             // 
@@ -312,111 +385,44 @@
             this.btnChooseImage.UseVisualStyleBackColor = true;
             this.btnChooseImage.Click += new System.EventHandler(this.btnChooseImage_Click);
             // 
-            // txtProductDescription
+            // guna2HtmlLabel1
             // 
-            this.txtProductDescription.AnimateReadOnly = false;
-            this.txtProductDescription.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.txtProductDescription.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtProductDescription.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtProductDescription.Depth = 0;
-            this.txtProductDescription.HideSelection = true;
-            this.txtProductDescription.Hint = "Mô tả";
-            this.txtProductDescription.Location = new System.Drawing.Point(307, 196);
-            this.txtProductDescription.MaxLength = 3000;
-            this.txtProductDescription.MouseState = MaterialSkin.MouseState.OUT;
-            this.txtProductDescription.Name = "txtProductDescription";
-            this.txtProductDescription.PasswordChar = '\0';
-            this.txtProductDescription.ReadOnly = false;
-            this.txtProductDescription.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtProductDescription.SelectedText = "";
-            this.txtProductDescription.SelectionLength = 0;
-            this.txtProductDescription.SelectionStart = 0;
-            this.txtProductDescription.ShortcutsEnabled = true;
-            this.txtProductDescription.Size = new System.Drawing.Size(844, 175);
-            this.txtProductDescription.TabIndex = 16;
-            this.txtProductDescription.TabStop = false;
-            this.txtProductDescription.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtProductDescription.UseSystemPasswordChar = false;
+            this.guna2HtmlLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2HtmlLabel1.Location = new System.Drawing.Point(307, 460);
+            this.guna2HtmlLabel1.Name = "guna2HtmlLabel1";
+            this.guna2HtmlLabel1.Size = new System.Drawing.Size(66, 18);
+            this.guna2HtmlLabel1.TabIndex = 28;
+            this.guna2HtmlLabel1.Text = "Trạng thái:";
             // 
-            // txtProductColor
+            // guna2HtmlLabel2
             // 
-            this.txtProductColor.AnimateReadOnly = false;
-            this.txtProductColor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.txtProductColor.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtProductColor.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtProductColor.Depth = 0;
-            this.txtProductColor.HideSelection = true;
-            this.txtProductColor.Hint = "Màu sắc";
-            this.txtProductColor.Location = new System.Drawing.Point(307, 544);
-            this.txtProductColor.MaxLength = 32767;
-            this.txtProductColor.MouseState = MaterialSkin.MouseState.OUT;
-            this.txtProductColor.Name = "txtProductColor";
-            this.txtProductColor.PasswordChar = '\0';
-            this.txtProductColor.ReadOnly = false;
-            this.txtProductColor.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtProductColor.SelectedText = "";
-            this.txtProductColor.SelectionLength = 0;
-            this.txtProductColor.SelectionStart = 0;
-            this.txtProductColor.ShortcutsEnabled = true;
-            this.txtProductColor.Size = new System.Drawing.Size(372, 108);
-            this.txtProductColor.TabIndex = 17;
-            this.txtProductColor.TabStop = false;
-            this.txtProductColor.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtProductColor.UseSystemPasswordChar = false;
-            this.txtProductColor.Validated += new System.EventHandler(this.TxtProductColor_Validated);
-            this.txtProductColor.Validating += new System.ComponentModel.CancelEventHandler(this.TxtProductColor_Validating);
-            // 
-            // txtProductSize
-            // 
-            this.txtProductSize.AnimateReadOnly = false;
-            this.txtProductSize.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.txtProductSize.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtProductSize.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtProductSize.Depth = 0;
-            this.txtProductSize.HideSelection = true;
-            this.txtProductSize.Hint = "Kích thước";
-            this.txtProductSize.Location = new System.Drawing.Point(708, 544);
-            this.txtProductSize.MaxLength = 32767;
-            this.txtProductSize.MouseState = MaterialSkin.MouseState.OUT;
-            this.txtProductSize.Name = "txtProductSize";
-            this.txtProductSize.PasswordChar = '\0';
-            this.txtProductSize.ReadOnly = false;
-            this.txtProductSize.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtProductSize.SelectedText = "";
-            this.txtProductSize.SelectionLength = 0;
-            this.txtProductSize.SelectionStart = 0;
-            this.txtProductSize.ShortcutsEnabled = true;
-            this.txtProductSize.Size = new System.Drawing.Size(443, 108);
-            this.txtProductSize.TabIndex = 18;
-            this.txtProductSize.TabStop = false;
-            this.txtProductSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtProductSize.UseSystemPasswordChar = false;
-            this.txtProductSize.Validated += new System.EventHandler(this.TxtProductSize_Validated);
-            this.txtProductSize.Validating += new System.ComponentModel.CancelEventHandler(this.TxtProductSize_Validating);
-            // 
-            // errorProvider
-            // 
-            this.errorProvider.ContainerControl = this;
-            this.errorProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("errorProvider.Icon")));
+            this.guna2HtmlLabel2.BackColor = System.Drawing.Color.Transparent;
+            this.guna2HtmlLabel2.Location = new System.Drawing.Point(759, 460);
+            this.guna2HtmlLabel2.Name = "guna2HtmlLabel2";
+            this.guna2HtmlLabel2.Size = new System.Drawing.Size(63, 18);
+            this.guna2HtmlLabel2.TabIndex = 29;
+            this.guna2HtmlLabel2.Text = "Danh mục";
             // 
             // FormProduct
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1210, 729);
+            this.Controls.Add(this.guna2HtmlLabel2);
+            this.Controls.Add(this.guna2HtmlLabel1);
+            this.Controls.Add(this.comboBoxProductCategoryID);
+            this.Controls.Add(this.comboBoxProductStatus);
             this.Controls.Add(this.txtProductSize);
             this.Controls.Add(this.txtProductColor);
-            this.Controls.Add(this.txtProductDescription);
-            this.Controls.Add(this.btnChooseImage);
             this.Controls.Add(this.txtProductQuantity);
+            this.Controls.Add(this.txtProductPriceSale);
+            this.Controls.Add(this.txtProductPrice);
+            this.Controls.Add(this.txtProductDescription);
+            this.Controls.Add(this.txtProductName);
+            this.Controls.Add(this.btnChooseImage);
             this.Controls.Add(this.buttonProductDelete);
             this.Controls.Add(this.buttonProduct);
             this.Controls.Add(this.buttonProductCancel);
-            this.Controls.Add(this.comboBoxProductCategoryID);
-            this.Controls.Add(this.comboBoxProductStatus);
-            this.Controls.Add(this.txtProductPriceSale);
-            this.Controls.Add(this.txtProductPrice);
-            this.Controls.Add(this.txtProductName);
             this.Controls.Add(this.materialCard1);
             this.Controls.Add(this.labelProductTitle);
             this.FormStyle = MaterialSkin.Controls.MaterialForm.FormStyles.ActionBar_None;
@@ -438,20 +444,23 @@
         private MaterialSkin.Controls.MaterialLabel labelProductTitle;
         private MaterialSkin.Controls.MaterialCard materialCard1;
         private System.Windows.Forms.PictureBox pictureBox;
-        private MaterialSkin.Controls.MaterialTextBox txtProductName;
-        private MaterialSkin.Controls.MaterialTextBox txtProductPrice;
-        private MaterialSkin.Controls.MaterialTextBox txtProductPriceSale;
-        private MaterialSkin.Controls.MaterialComboBox comboBoxProductStatus;
-        private MaterialSkin.Controls.MaterialComboBox comboBoxProductCategoryID;
         private MaterialSkin.Controls.MaterialButton buttonProductCancel;
         private MaterialSkin.Controls.MaterialButton buttonProduct;
         private MaterialSkin.Controls.MaterialButton buttonProductDelete;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
-        private MaterialSkin.Controls.MaterialTextBox txtProductQuantity;
-        private MaterialSkin.Controls.MaterialButton btnChooseImage;
-        private MaterialSkin.Controls.MaterialMultiLineTextBox2 txtProductDescription;
-        private MaterialSkin.Controls.MaterialMultiLineTextBox2 txtProductColor;
-        private MaterialSkin.Controls.MaterialMultiLineTextBox2 txtProductSize;
         private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
+        private Guna.UI2.WinForms.Guna2TextBox txtProductName;
+        private Guna.UI2.WinForms.Guna2TextBox txtProductSize;
+        private Guna.UI2.WinForms.Guna2TextBox txtProductColor;
+        private Guna.UI2.WinForms.Guna2TextBox txtProductQuantity;
+        private Guna.UI2.WinForms.Guna2TextBox txtProductPriceSale;
+        private Guna.UI2.WinForms.Guna2TextBox txtProductPrice;
+        private Guna.UI2.WinForms.Guna2TextBox txtProductDescription;
+        private Guna.UI2.WinForms.Guna2ComboBox comboBoxProductCategoryID;
+        private Guna.UI2.WinForms.Guna2ComboBox comboBoxProductStatus;
+        private MaterialSkin.Controls.MaterialButton btnChooseImage;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel2;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
     }
 }

@@ -31,13 +31,14 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtPassword = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtUsername = new Guna.UI2.WinForms.Guna2TextBox();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.button_login = new MaterialSkin.Controls.MaterialButton();
             this.checkbox_showpassword = new MaterialSkin.Controls.MaterialCheckbox();
-            this.txtPassword = new MaterialSkin.Controls.MaterialMaskedTextBox();
-            this.txtUsername = new MaterialSkin.Controls.MaterialMaskedTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -45,16 +46,64 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.txtPassword);
+            this.panel2.Controls.Add(this.txtUsername);
             this.panel2.Controls.Add(this.materialLabel1);
             this.panel2.Controls.Add(this.button_login);
             this.panel2.Controls.Add(this.checkbox_showpassword);
-            this.panel2.Controls.Add(this.txtPassword);
-            this.panel2.Controls.Add(this.txtUsername);
             this.panel2.ForeColor = System.Drawing.Color.Blue;
             this.panel2.Location = new System.Drawing.Point(561, 27);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(553, 498);
             this.panel2.TabIndex = 2;
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Animated = true;
+            this.txtPassword.BorderRadius = 4;
+            this.txtPassword.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtPassword.DefaultText = "123";
+            this.txtPassword.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtPassword.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtPassword.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtPassword.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtPassword.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtPassword.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtPassword.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtPassword.IconLeft = ((System.Drawing.Image)(resources.GetObject("txtPassword.IconLeft")));
+            this.txtPassword.Location = new System.Drawing.Point(82, 231);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '\0';
+            this.txtPassword.PlaceholderText = "Mật khẩu";
+            this.txtPassword.SelectedText = "";
+            this.txtPassword.Size = new System.Drawing.Size(410, 60);
+            this.txtPassword.TabIndex = 8;
+            this.txtPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPassword_KeyPress);
+            // 
+            // txtUsername
+            // 
+            this.txtUsername.Animated = true;
+            this.txtUsername.BorderRadius = 4;
+            this.txtUsername.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtUsername.DefaultText = "admin";
+            this.txtUsername.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtUsername.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtUsername.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtUsername.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtUsername.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtUsername.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtUsername.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtUsername.IconLeft = ((System.Drawing.Image)(resources.GetObject("txtUsername.IconLeft")));
+            this.txtUsername.Location = new System.Drawing.Point(82, 138);
+            this.txtUsername.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.PasswordChar = '\0';
+            this.txtUsername.PlaceholderText = "Tên đăng nhập";
+            this.txtUsername.SelectedText = "";
+            this.txtUsername.Size = new System.Drawing.Size(410, 60);
+            this.txtUsername.TabIndex = 7;
+            this.txtUsername.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUsername_KeyPress);
             // 
             // materialLabel1
             // 
@@ -110,99 +159,6 @@
             this.checkbox_showpassword.UseVisualStyleBackColor = true;
             this.checkbox_showpassword.CheckedChanged += new System.EventHandler(this.checkbox_showpassword_CheckedChanged);
             // 
-            // txtPassword
-            // 
-            this.txtPassword.AllowPromptAsInput = true;
-            this.txtPassword.AnimateReadOnly = false;
-            this.txtPassword.AsciiOnly = false;
-            this.txtPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.txtPassword.BeepOnError = true;
-            this.txtPassword.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtPassword.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.IncludeLiterals;
-            this.txtPassword.Depth = 0;
-            this.txtPassword.ErrorMessage = "Vui lòng nhập mật khẩu";
-            this.txtPassword.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPassword.HelperText = "Nhập mật khẩu";
-            this.txtPassword.HidePromptOnLeave = false;
-            this.txtPassword.HideSelection = true;
-            this.txtPassword.Hint = "Mật khẩu";
-            this.txtPassword.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Default;
-            this.txtPassword.LeadingIcon = null;
-            this.txtPassword.Location = new System.Drawing.Point(82, 231);
-            this.txtPassword.Mask = "";
-            this.txtPassword.MaxLength = 32767;
-            this.txtPassword.MouseState = MaterialSkin.MouseState.OUT;
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.PasswordChar = '\0';
-            this.txtPassword.PrefixSuffixText = null;
-            this.txtPassword.PromptChar = '_';
-            this.txtPassword.ReadOnly = false;
-            this.txtPassword.RejectInputOnFirstFailure = false;
-            this.txtPassword.ResetOnPrompt = true;
-            this.txtPassword.ResetOnSpace = true;
-            this.txtPassword.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtPassword.SelectedText = "";
-            this.txtPassword.SelectionLength = 0;
-            this.txtPassword.SelectionStart = 0;
-            this.txtPassword.ShortcutsEnabled = true;
-            this.txtPassword.Size = new System.Drawing.Size(410, 48);
-            this.txtPassword.SkipLiterals = true;
-            this.txtPassword.TabIndex = 3;
-            this.txtPassword.TabStop = false;
-            this.txtPassword.Text = "123";
-            this.txtPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtPassword.TextMaskFormat = System.Windows.Forms.MaskFormat.IncludeLiterals;
-            this.txtPassword.TrailingIcon = null;
-            this.txtPassword.UseSystemPasswordChar = false;
-            this.txtPassword.ValidatingType = null;
-            this.txtPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPassword_KeyPress);
-            // 
-            // txtUsername
-            // 
-            this.txtUsername.AllowPromptAsInput = true;
-            this.txtUsername.AnimateReadOnly = false;
-            this.txtUsername.AsciiOnly = false;
-            this.txtUsername.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.txtUsername.BeepOnError = true;
-            this.txtUsername.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtUsername.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.IncludeLiterals;
-            this.txtUsername.Depth = 0;
-            this.txtUsername.ErrorMessage = "Nhập vào tên đăng nhập";
-            this.txtUsername.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUsername.HelperText = "Nhập vào tên đăng nhập";
-            this.txtUsername.HidePromptOnLeave = false;
-            this.txtUsername.HideSelection = true;
-            this.txtUsername.Hint = "Tên đăng nhập";
-            this.txtUsername.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Default;
-            this.txtUsername.LeadingIcon = null;
-            this.txtUsername.Location = new System.Drawing.Point(82, 137);
-            this.txtUsername.Mask = "";
-            this.txtUsername.MaxLength = 32767;
-            this.txtUsername.MouseState = MaterialSkin.MouseState.OUT;
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.PasswordChar = '\0';
-            this.txtUsername.PrefixSuffixText = null;
-            this.txtUsername.PromptChar = '_';
-            this.txtUsername.ReadOnly = false;
-            this.txtUsername.RejectInputOnFirstFailure = false;
-            this.txtUsername.ResetOnPrompt = true;
-            this.txtUsername.ResetOnSpace = true;
-            this.txtUsername.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtUsername.SelectedText = "";
-            this.txtUsername.SelectionLength = 0;
-            this.txtUsername.SelectionStart = 0;
-            this.txtUsername.ShortcutsEnabled = true;
-            this.txtUsername.Size = new System.Drawing.Size(410, 48);
-            this.txtUsername.SkipLiterals = true;
-            this.txtUsername.TabIndex = 3;
-            this.txtUsername.TabStop = false;
-            this.txtUsername.Text = "admin";
-            this.txtUsername.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtUsername.TextMaskFormat = System.Windows.Forms.MaskFormat.IncludeLiterals;
-            this.txtUsername.TrailingIcon = null;
-            this.txtUsername.UseSystemPasswordChar = false;
-            this.txtUsername.ValidatingType = null;
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
@@ -217,6 +173,12 @@
             // 
             this.errorProvider.ContainerControl = this;
             this.errorProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("errorProvider.Icon")));
+            // 
+            // notifyIcon
+            // 
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "notifyIcon1";
+            this.notifyIcon.Visible = true;
             // 
             // Login
             // 
@@ -245,9 +207,10 @@
         private MaterialSkin.Controls.MaterialCheckbox checkbox_showpassword;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private MaterialSkin.Controls.MaterialMaskedTextBox txtPassword;
-        private MaterialSkin.Controls.MaterialMaskedTextBox txtUsername;
         private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
+        private Guna.UI2.WinForms.Guna2TextBox txtUsername;
+        private Guna.UI2.WinForms.Guna2TextBox txtPassword;
     }
 }
 
