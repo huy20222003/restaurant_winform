@@ -33,5 +33,16 @@ namespace restaurant.Properties {
                 return ((string)(this["NorthwindConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-4OHDBHH\\SQLEXPRESS;Initial Catalog=restaurant;Integrated Secu" +
+            "rity=True;TrustServerCertificate=True")]
+        public string restaurantConnectionString {
+            get {
+                return ((string)(this["restaurantConnectionString"]));
+            }
+        }
     }
 }

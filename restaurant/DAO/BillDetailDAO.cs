@@ -45,10 +45,10 @@ namespace restaurant.DAO
             }
         }
 
-        public bool UpdateBillDetail(int billId, int productId, int quantity, string size, string color)
+        public bool UpdateBillDetail(int billId, int productId, int quantity, string size, string color, string updatedAt)
         {
             BillDetail billDetailExists = GetBillDetailIfExists(billId, productId);
-            string query = string.Format("UPDATE BillDetail SET Quantity = {0}, Size = N'{1}', Color = N'{2}' WHERE Id = {3}", quantity, size, color, billDetailExists.ID);
+            string query = string.Format("UPDATE BillDetail SET Quantity = {0}, Size = N'{1}', Color = N'{2}', UpdatedAt = N'{3}' WHERE Id = {4}", quantity, size, color, updatedAt, billDetailExists.ID);
             int result = DataProvider.Instance.ExecuteNonQuery(query);
             return result > 0;
         }
@@ -79,5 +79,13 @@ namespace restaurant.DAO
             int result = DataProvider.Instance.ExecuteNonQuery(query);
             return result > 0;
         }
+
+        public bool DeleteBillDetailByBillId(int billId)
+        {
+            string query = string.Format("DELETE FROM BillDetail WHERE BillId = {0}", billId);
+            int result = DataProvider.Instance.ExecuteNonQuery(query);
+            return result > 0;
+        }
+
     }
 }

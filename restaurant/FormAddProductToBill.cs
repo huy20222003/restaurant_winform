@@ -7,6 +7,7 @@ using MaterialSkin;
 using MaterialSkin.Controls;
 using restaurant.DAO;
 using restaurant.DTO;
+using Sunny.UI;
 
 namespace restaurant
 {
@@ -34,7 +35,7 @@ namespace restaurant
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.ColorScheme = new ColorScheme(
+            materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
                 Primary.Blue800,
                 Primary.Blue900,
                 Primary.Blue500,
@@ -100,6 +101,14 @@ namespace restaurant
                     Location = new Point(100, 55)
                 };
 
+                MaterialLabel labelPriceSaleValue = new MaterialLabel
+                {
+                    Text = "Giá tiền: " + row["PriceSale"] + "VND",
+                    AutoSize = true,
+                    FontType = MaterialSkinManager.fontType.Body1,
+                    Location = new Point(100, 55)
+                };
+
                 buttonAddProduct = new Guna2CircleButton
                 {
                     Size = new Size(50, 50),
@@ -112,15 +121,17 @@ namespace restaurant
 
                 buttonAddProduct.Click += ButtonAddProduct_Click;
 
-                Guna2NumericUpDown quantity = new Guna2NumericUpDown { Location = new Point(400, 14) };
+                Font font = new Font("Segoe UI", 14, FontStyle.Regular);
+
+                UIIntegerUpDown quantity = new UIIntegerUpDown { Location = new Point(400, 14), Font = font };
                 quantity.ValueChanged += (s, e) => { quantityValue = (int)quantity.Value; };
 
-                Guna2ComboBox chooseSize = new Guna2ComboBox { Location = new Point(600, 14) };
+                UIComboBox chooseSize = new UIComboBox { Location = new Point(600, 14), Text = "Chọn kích cỡ" };
                 string[] sizeArr = row["Size"].ToString().Split(',');
                 chooseSize.Items.AddRange(sizeArr);
                 chooseSize.SelectedIndexChanged += (s, e) => { selectedSize = chooseSize.SelectedItem.ToString(); };
 
-                Guna2ComboBox chooseColor = new Guna2ComboBox { Location = new Point(800, 14) };
+                UIComboBox chooseColor = new UIComboBox { Location = new Point(800, 14), Text = "Chọn màu" };
                 string[] colorArr = row["Color"].ToString().Split(',');
                 chooseColor.Items.AddRange(colorArr);
                 chooseColor.SelectedIndexChanged += (s, e) => { selectedColor = chooseColor.SelectedItem.ToString(); };
@@ -128,6 +139,7 @@ namespace restaurant
                 panelProductItem.Controls.Add(pictureBox);
                 panelProductItem.Controls.Add(labelNameValue);
                 panelProductItem.Controls.Add(labelPriceValue);
+                panelProductItem.Controls.Add(labelPriceSaleValue);
                 panelProductItem.Controls.Add(buttonAddProduct);
                 panelProductItem.Controls.Add(quantity);
                 panelProductItem.Controls.Add(chooseSize);
@@ -135,7 +147,7 @@ namespace restaurant
 
                 flowLayoutPanel.Controls.Add(panelProductItem);
             }
-
+            productList?.Dispose();
             cardFormAddProduct.Controls.Clear();
             cardFormAddProduct.Controls.Add(flowLayoutPanel);
         }
@@ -146,50 +158,88 @@ namespace restaurant
 
             if (productInfo != null)
             {
-                if (quantityValue > 0 && !string.IsNullOrEmpty(selectedSize) || !string.IsNullOrEmpty(selectedColor))
+                if (quantityValue > 0 && (!string.IsNullOrEmpty(selectedSize) || !string.IsNullOrEmpty(selectedColor)))
                 {
-                    BillDetail billDetailExits = BillDetailDAO.Instance.GetBillDetailIfExists(billID, int.Parse(productInfo["id"].ToString()));
-                    if (billDetailExits != null)
-                    {
-                        bool updateResponse = BillDetailDAO.Instance.UpdateBillDetail(billID, Convert.ToInt32(productInfo["id"]), quantityValue, selectedSize, selectedColor);
+                    // Kiểm tra xem sản phẩm đã tồn tại trong hóa đơn chưa
+                    BillDetail billDetailExists = BillDetailDAO.Instance.GetBillDetailIfExists(billID, Convert.ToInt32(productInfo["id"]));
 
-                        if (updateResponse)
-                        {
-                            notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm sản phẩm vào hóa đơn thành công.", ToolTipIcon.Info);
-                        }
-                        else
-                        {
-                            notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm sản phẩm vào hóa đơn không thành công. Vui lòng thử lại sau.", ToolTipIcon.Error);
-                        }
+                    // Thực hiện thêm hoặc cập nhật sản phẩm trong hóa đơn
+                    bool actionResponse;
+                    if (billDetailExists != null)
+                    {
+                        DateTime updatedAt = DateTime.Now;
+                        string formattedDate = updatedAt.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                        // Cập nhật sản phẩm trong hóa đơn
+                        actionResponse = BillDetailDAO.Instance.UpdateBillDetail(billID, Convert.ToInt32(productInfo["id"]), quantityValue, selectedSize, selectedColor, formattedDate);
                     }
                     else
                     {
-                        if (billDetailExits != null)
-                        {
-                            bool insertResponse = BillDetailDAO.Instance.InsertBillDetail(billID, Convert.ToInt32(productInfo["id"]), quantityValue, selectedSize, selectedColor);
+                        // Thêm mới sản phẩm vào hóa đơn
+                        actionResponse = BillDetailDAO.Instance.InsertBillDetail(billID, Convert.ToInt32(productInfo["id"]), quantityValue, selectedSize, selectedColor);
+                    }
 
-                            if (insertResponse)
+                    // Hiển thị thông báo phản hồi dựa trên kết quả thực hiện
+                    if (actionResponse)
+                    {
+                        decimal totalPrices = CaculateSumTotalPrice();
+                        if (totalPrices != 0)
+                        {
+                            DateTime updatedAt = DateTime.Now;
+                            string formattedDate = updatedAt.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                            bool updateBillResponse = BillDAO.Instance.UpdateBillTotalPrice(billID, totalPrices, formattedDate);
+                            if (updateBillResponse)
                             {
                                 notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm sản phẩm vào hóa đơn thành công.", ToolTipIcon.Info);
                             }
                             else
                             {
-                                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thêm sản phẩm vào hóa đơn không thành công. Vui lòng thử lại sau.", ToolTipIcon.Error);
+                                notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Cập nhật tổng tiền thất bại.", ToolTipIcon.Error);
                             }
                         }
+                        else
+                        {
+                            notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Tổng tiền thanh toán phải khác 0.", ToolTipIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Thao tác không thành công. Vui lòng thử lại sau.", ToolTipIcon.Error);
                     }
                 }
                 else
                 {
-                    notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Vui lòng chọn thuộc tính cho sản phẩm.", ToolTipIcon.Warning);
+                    notifyIcon.ShowBalloonTip(10000, "Thông báo từ Góc Bếp Nhỏ", "Vui lòng chọn số lượng và thuộc tính cho sản phẩm.", ToolTipIcon.Warning);
                 }
-
             }
         }
 
         private void txtProductSearchValue_TextChanged(object sender, EventArgs e)
         {
             DisplayProductList();
+        }
+
+        private decimal CaculateSumTotalPrice()
+        {
+            decimal totalPrices = 0;
+            DataTable billDetailList = BillDetailDAO.Instance.GetBillDetailsByBillId(billID);
+            foreach (DataRow row in billDetailList.Rows)
+            {
+                int productId = Convert.ToInt32(row["ProductId"]);
+                int quantity = Convert.ToInt32(row["Quantity"]);
+
+                // Lấy thông tin sản phẩm từ DAO
+                Product product = ProductDAO.Instance.GetProductById(productId);
+
+                if (product != null)
+                {
+                    // Tính giá tiền dựa trên giá gốc hoặc giá giảm nếu có
+                    decimal price = (product.PriceSale != 0) ? product.PriceSale : product.Price;
+
+                    // Tính tổng giá cho số lượng sản phẩm đã chọn
+                    totalPrices += price * quantity;
+                }
+            }
+            return totalPrices;
         }
     }
 }
