@@ -20,6 +20,11 @@ namespace restaurant.DAO
 
         private BillDAO() { }
 
+        public DataTable GetListBill()
+        {
+            return DataProvider.Instance.ExecuteQuery("SELECT * FROM Bill");
+        }
+
         public int GetBillCount()
         {
             DataTable result = DataProvider.Instance.ExecuteQuery("SELECT COUNT(*) as billCount FROM Bill");
@@ -49,6 +54,15 @@ namespace restaurant.DAO
             return result > 0;
         }
 
+        public bool UpdateBillTotalPrice(int id, decimal totalPrices, string updatedAt)
+        {
+            string query = string.Format("UPDATE Bill SET TotalPrices = {0}, UpdatedAt =  N'{1}' WHERE Id = {2}", totalPrices, updatedAt, id);
+
+            int result = DataProvider.Instance.ExecuteNonQuery(query);
+            return result > 0;
+        }
+
+
         public DataTable GetLatestBillByTableId(int tableId)
         {
             string query = string.Format("SELECT TOP 1 * FROM Bill WHERE tableId = '{0}' ORDER BY CreatedAt DESC", tableId);
@@ -59,6 +73,13 @@ namespace restaurant.DAO
             return data;
         }
 
+        public bool DeleteBillById(int Id)
+        {
+            string query = string.Format("DELETE FROM Bill WHERE Id = '{0}'", Id);
+            int result = DataProvider.Instance.ExecuteNonQuery(query);
+    
+            return result > 0;
+        }
 
         public DataTable GetBillCountByDate(int month, int year)
         {
@@ -67,6 +88,20 @@ namespace restaurant.DAO
                            "WHERE MONTH(CreatedAt) = " + month + " AND YEAR(CreatedAt) = " + year + " " +
                            "GROUP BY DAY(CreatedAt)";
 
+            return DataProvider.Instance.ExecuteQuery(query);
+        }
+
+        public DataTable GetBillById(string searchValue)
+        {
+            string query = string.Format("SELECT * FROM Bill WHERE id LIKE '{0}'", searchValue);
+            DataTable data = DataProvider.Instance.ExecuteQuery(query);
+
+            return data;
+        }
+
+        public DataTable GetListBillByCondition(string columnName, string sortDirection)
+        {
+            string query = "SELECT * FROM Bill ORDER BY " + columnName + " " + sortDirection;
             return DataProvider.Instance.ExecuteQuery(query);
         }
     }

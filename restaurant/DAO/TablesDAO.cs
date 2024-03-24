@@ -27,7 +27,12 @@ namespace restaurant.DAO
 
             foreach (DataRow row in data.Rows)
             {
-                return new Tables(row);
+                return new Tables(
+                    Convert.ToInt32(row["id"]),
+                    row["name"].ToString(),
+                    row["description"].ToString(),
+                    row["status"].ToString()
+                );
             }
 
             return null;
